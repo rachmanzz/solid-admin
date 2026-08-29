@@ -1,5 +1,30 @@
 # Agent Guide
 
+These rules are MANDATORY for opencode and any AI agent operating in this
+repository. Read this file before executing any command.
+
+## Non-Negotiable Rules
+
+- **High-Care Processing Standard** — Every task must be processed with the
+  highest standard of care and caution. Double-check before acting.
+- **No Unauthorized Changes** — Never destroy, delete, rearrange, or modify
+  anything without explicit user approval. This includes files, directories,
+  git history, and configuration.
+- **No Over-Assumption** — Stay strictly focused on the user's request. Do NOT
+  assume the user wants changes to other parts of the system beyond the
+  explicit request. When in doubt, ask first.
+- **Never Reduce or Break Features** — Reducing existing features, causing
+  features to stop working, or introducing regressions is STRICTLY FORBIDDEN.
+  All changes must be backward-compatible and additive only, unless the user
+  explicitly approves a breaking change.
+- **Planning Is Mandatory Before Changes** — Planning MUST be done before
+  starting any change. Present a plan (e.g., a todo list or a short written
+  plan) to the user and get approval before executing any modification.
+- **Audit Means Report Only** — When asked to audit, review, or analyze code,
+  the agent MUST NOT edit files. Audit tasks produce reports only. Any changes
+  identified during an audit require explicit user approval and a separate
+  change request.
+
 This is a SolidJS 2.x project. Solid is not React: components run once (there is no re-render), reactivity is fine-grained through signals, and effects/memos have Solid-specific semantics. Do not port React patterns.
 
 ## Versioned skills (in node_modules — read on demand)

@@ -1,0 +1,66 @@
+> ## How to write logs
+>
+> **Purpose** — This file is a permanent, auditable record of the decisions made
+> for **solid-admin**. Each entry captures *what* was decided, *why* (context),
+> and *what* follows from it (consequence), so rationale is never lost.
+>
+> **How to write**
+> 1. Add a new entry at the **top** of the log. The newest decision is always first.
+> 2. Use the ADR-style format: **Decision**, **Context**, **Consequence**.
+> 3. Give the entry a stable identifier (e.g. `D-006`) and never reuse or renumber
+>    past identifiers.
+>
+> **Append-only** — Entries are **add-only**. Do **not** edit or delete existing
+> entries. If a decision is superseded, add a new entry that states the
+> supersession. This preserves an honest, tamper-evident decision history.
+
+---
+
+# Decision Log
+
+Recorded decisions for **solid-admin**, with their context and rationale. Each
+entry follows the ADR-style format: **Decision**, **Context**, **Consequence**.
+Newest decision is at the top.
+
+## D-005: Static-only build contract
+
+- **Context:** The template ships client-mode (`start: true`, no SSR) and SSR is
+  not wired for the third-party router.
+- **Decision:** Keep the build static; deploy `dist/client` to any static host.
+- **Consequence:** No server dependencies. SSR remains out of scope unless the
+  adapter's SSR utilities stabilize.
+
+## D-004: Styling is centralized in `src/App.css` via Tailwind v4 + daisyUI 5
+
+- **Context:** Solid 2.x + TanStack template; daisyUI is already a dependency.
+- **Decision:** Configure Tailwind v4 (CSS-based config) with the daisyUI plugin
+  in `src/App.css`, and prefer daisyUI utility classes over hand-rolled CSS.
+- **Consequence:** Consistent, themeable UI with minimal custom CSS. Existing
+  demo components still use plain classes and should be migrated to daisyUI.
+
+## D-003: Documentation language is English
+
+- **Context:** The project targets a broad/technical audience and a public
+  repository.
+- **Decision:** All docs (`README.md`, `docs/*`, `knowledge/*`) are written in
+  English.
+- **Consequence:** Consistent, searchable, contributor-friendly documentation.
+
+## D-002: opencode config requires `git` to ask
+
+- **Context:** Pushing to a remote can destroy or publish work unintentionally.
+- **Decision:** `.opencode/opencode.json` sets `permission.bash."git *": "ask"`.
+- **Consequence:** Every git command prompts for approval. Other bash commands
+  retain opencode's default `ask` behavior.
+
+## D-001: Skills live in `.opencode/skills/`, not `.agents/skills/`
+
+- **Context:** The daisyUI agent skill originally lived in
+  `.agents/skills/daisyui`. The opencode skill loader reliably scans
+  `.opencode/skills/**/SKILL.md`, while `.agents/skills/` is only a documented
+  *global* (`~/.agents/skills`) auto-load path — a project-local copy is not
+  guaranteed to be picked up.
+- **Decision:** Move project agent skills into `.opencode/skills/`.
+- **Consequence:** Skills are reliably loaded by opencode. `.agents/` is removed
+  when empty. If cross-tool sharing (e.g. Claude Code) is later desired, a
+  symlink or `skills.paths` entry can re-expose them.
