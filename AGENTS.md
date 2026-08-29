@@ -27,6 +27,27 @@ repository. Read this file before executing any command.
 
 This is a SolidJS 2.x project. Solid is not React: components run once (there is no re-render), reactivity is fine-grained through signals, and effects/memos have Solid-specific semantics. Do not port React patterns.
 
+## Knowledge base (`knowledge/`)
+
+The `knowledge/` folder is the project's durable knowledge base. The agent MUST
+consult it and keep it coherent:
+
+- **Read before acting.** Before non-trivial work, check `knowledge/plan.md`
+  (direction/roadmap) and `knowledge/decision-log.md` (prior decisions and their
+  rationale). Respect recorded decisions; do not silently contradict them.
+- **`plan.md` — living roadmap.** May be updated as priorities shift: add goals,
+  mark `- [x]` when done, keep Non-goals accurate. Prefer editing existing
+  entries over duplicating them.
+- **`changelog.md` — append-only history.** Add new entries at the **top**;
+  never edit or delete existing entries. If something was wrong, add a correcting
+  entry. See its "How to write logs" guide.
+- **`decision-log.md` — append-only decisions.** When a real decision is made or
+  a prior one is superseded, add a new entry at the **top** using the
+  Decision/Context/Consequence format; never alter or remove past entries.
+- **When in doubt, record.** If a change implies a new direction or decision,
+  propose a `decision-log.md` entry (subject to user approval per the rules
+  above) rather than leaving rationale implicit.
+
 ## Versioned skills (in node_modules — read on demand)
 
 The installed packages ship agent skills that match their exact installed versions:
