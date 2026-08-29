@@ -1,5 +1,6 @@
 ---
 title: Basic Guide
+layout: docs
 ---
 
 # solid-admin — Basic Guide

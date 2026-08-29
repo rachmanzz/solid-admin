@@ -1,5 +1,6 @@
 ---
 title: Project Structure
+layout: docs
 ---
 
 # Project Structure

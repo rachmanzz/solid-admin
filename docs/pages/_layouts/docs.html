@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ page.title }} — solid-admin Docs</title>
+  <meta name="description" content="{{ site.description }}">
+  <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a href="{{ site.baseurl }}/" class="brand">
+      <span class="brand-mark">SA</span>
+      <span class="brand-name">solid-admin <span class="brand-sub">Docs</span></span>
+    </a>
+    <nav class="site-nav">
+      <a href="{{ site.baseurl }}/basic.html">Basic</a>
+      <a href="{{ site.baseurl }}/project-structures.html">Structure</a>
+      <a href="{{ site.baseurl }}/knowledge.html">Knowledge</a>
+    </nav>
+  </header>
+
+  <div class="docs-layout">
+    <aside class="docs-sidebar">
+      <nav>
+        <p class="nav-title">Documentation</p>
+        <a href="{{ site.baseurl }}/" class="{% if page.url == '/' %}active{% endif %}">Home</a>
+        <a href="{{ site.baseurl }}/basic.html" class="{% if page.url == '/basic.html' %}active{% endif %}">Basic Guide</a>
+        <a href="{{ site.baseurl }}/project-structures.html" class="{% if page.url == '/project-structures.html' %}active{% endif %}">Project Structure</a>
+        <a href="{{ site.baseurl }}/knowledge.html" class="{% if page.url == '/knowledge.html' %}active{% endif %}">Knowledge Base</a>
+      </nav>
+    </aside>
+
+    <main class="docs-main">
+      <article class="prose">
+        {{ content }}
+      </article>
+    </main>
+  </div>
+
+  <footer class="site-footer">
+    <span>solid-admin · documentation built with Jekyll</span>
+    <a href="https://github.com/rachmanzz/solid-admin" target="_blank" rel="noreferrer">GitHub ↗</a>
+  </footer>
+</body>
+</html>

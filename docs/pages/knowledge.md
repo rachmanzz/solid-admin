@@ -1,5 +1,6 @@
 ---
 title: Knowledge Base
+layout: docs
 ---
 
 # Knowledge Base
