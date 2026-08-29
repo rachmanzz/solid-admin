@@ -27,6 +27,9 @@ chronological order (newest at the top).
 - `docs/project-structures.md` — file-by-file reference of the project layout.
 - `docs/basic.md` — practical getting-started guide (stack, styling, routing,
   components, deployment).
+- `docs/pages/` — Jekyll site (GitHub Pages) built from `./docs/pages`.
+- `.github/workflows/jekyll-gh-pages.yml` — now triggers on `release: published`
+  and builds from `./docs/pages` instead of the repo root.
 - `README.md` — rewritten in English to describe solid-admin.
 - `.opencode/opencode.json` — opencode config; `git *` commands set to `ask`.
 - `knowledge/` — project knowledge base (`plan.md`, `changelog.md`,

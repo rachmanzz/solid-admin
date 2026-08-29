@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ page.title }} — solid-admin Docs</title>
+  <meta name="description" content="{{ site.description }}">
+  <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a href="{{ site.baseurl }}/" class="brand">
+      <span class="brand-mark">SA</span>
+      <span class="brand-name">solid-admin <span class="brand-sub">Docs</span></span>
+    </a>
+    <nav class="site-nav">
+      <a href="{{ site.baseurl }}/basic.html">Basic</a>
+      <a href="{{ site.baseurl }}/project-structures.html">Structure</a>
+      <a href="{{ site.baseurl }}/knowledge.html">Knowledge</a>
+    </nav>
+  </header>
+
+  <main class="site-main">
+    {{ content }}
+  </main>
+
+  <footer class="site-footer">
+    <span>solid-admin · documentation built with Jekyll</span>
+    <a href="https://github.com/rachmanzz/solid-admin" target="_blank" rel="noreferrer">GitHub ↗</a>
+  </footer>
+</body>
+</html>

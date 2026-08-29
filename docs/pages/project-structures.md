@@ -1,3 +1,7 @@
+---
+title: Project Structure
+---
+
 # Project Structure
 
 This document describes the layout of the `solid-admin` project and the
@@ -45,7 +49,8 @@ src/
 │   └── Counter.test.tsx
 ├── routes/                  # TanStack route files (code-generated tree)
 │   ├── __root.tsx           # Root layout + not-found boundary
-│   ├── index.tsx            # Home route
+│   ├── index.tsx            # Home route (dashboard)
+│   ├── users.tsx            # Users list route
 │   └── users.$id.tsx        # Dynamic /users/$id route with loader
 └── routeTree.gen.ts         # Auto-generated typed route tree (do not edit)
 ```
@@ -62,7 +67,8 @@ generated entries render, wrapped in `src/Document.tsx`.
 ### `src/Document.tsx`
 
 The document shell that wraps the app in the generated entries (provides the
-outer `<html>`/`<head>`/`<body>` structure for the client-mode build).
+outer `<html>`/`<head>`/`<body>` structure for the client-mode build). Sets the
+daisyUI `data-theme`.
 
 ### `src/routes/`
 
@@ -70,10 +76,11 @@ TanStack owns everything routing. Route files follow TanStack's naming
 convention and are watched by `@tanstack/router-plugin` in `vite.config.ts`,
 which regenerates `src/routeTree.gen.ts`.
 
-- **`__root.tsx`** — the site-wide layout every route renders inside (nav,
-  `<Outlet />`), plus the `notFoundComponent` boundary. `<HeadContent />`
+- **`__root.tsx`** — the site-wide admin shell (drawer + navbar) every route
+  renders inside, plus the `notFoundComponent` boundary. `<HeadContent />`
   renders titles declared by matched routes' `head` options.
-- **`index.tsx`** — the home route (`/`).
+- **`index.tsx`** — the home route (`/`): the dashboard.
+- **`users.tsx`** — a users list page with a daisyUI table.
 - **`users.$id.tsx`** — a dynamic route (`/users/$id`) demonstrating loader-driven
   data: `fetchUser(id)` runs when navigation starts and is cached per params;
   `Route.useLoaderData()` returns typed, reactive data.
