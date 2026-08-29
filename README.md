@@ -27,8 +27,8 @@ solid-admin pairs Solid's fine-grained reactivity with [TanStack Router](https:/
 ## Getting started
 
 ```bash
-pnpm install      # install dependencies
-pnpm dev          # start the dev server at http://localhost:3000
+bun install      # install dependencies
+bun dev          # start the dev server at http://localhost:3000
 ```
 
 The page hot-reloads as you edit. Adding or renaming files under `src/routes/`
@@ -38,11 +38,11 @@ regenerates `src/routeTree.gen.ts` automatically.
 
 | Script       | What it does                           |
 | ------------ | -------------------------------------- |
-| `pnpm dev`   | Start the Vite dev server              |
-| `pnpm build` | Build the static site to `dist/client` |
-| `pnpm serve` | Preview the production build locally   |
-| `pnpm test`  | Run the Vitest suite                   |
-| `pnpm lint`  | Lint `src` with oxlint                 |
+| `bun dev`   | Start the Vite dev server              |
+| `bun build` | Build the static site to `dist/client` |
+| `bun serve` | Preview the production build locally   |
+| `bun test`  | Run the Vitest suite                   |
+| `bun lint`  | Lint `src` with oxlint                 |
 
 ## Project layout
 
@@ -72,7 +72,7 @@ JSX/HTML, prefer daisyUI utility classes over hand-rolled CSS.
 ## Deployment
 
 ```bash
-pnpm build
+bun build
 ```
 
 Deploy the **`dist/client`** folder to any static host. There are no server

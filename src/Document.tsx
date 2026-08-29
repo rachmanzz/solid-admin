@@ -10,12 +10,12 @@ import { HydrationScript } from '@solidjs/web';
 // needed. Delete this file to fall back to the plugin's built-in shell.
 export default function Document(props: ParentProps) {
   return (
-    <html lang="en">
+    <html lang="en" data-theme="light">
       <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
-        <title>Solid App</title>
+        <title>solid-admin</title>
         <HydrationScript />
       </head>
       <body>{props.children}</body>

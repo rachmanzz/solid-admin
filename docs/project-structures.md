@@ -22,7 +22,7 @@ solid-admin/
 ├── node_modules/
 ├── oxlint.config.mjs        # Lint configuration
 ├── package.json
-├── pnpm-lock.yaml
+├── bun.lock
 ├── public/                  # Static assets served as-is
 ├── README.md
 ├── skills-lock.json
@@ -112,7 +112,7 @@ route files change.
 ## Tests
 
 Components under `src/components/` are tested with Vitest (see
-`Counter.test.tsx`). Run `npm test` (or `pnpm test`) to execute the suite.
+`Counter.test.tsx`). Run `bun test` to execute the suite.
 
 ## Scripts
 

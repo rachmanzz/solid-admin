@@ -47,13 +47,13 @@ project is meant to be styled and extended.
 ### Prerequisites
 
 - Node.js (see `package.json` engines/lockfile for the pinned version)
-- A package manager — `pnpm` is used by the template, but `npm`/`yarn` work too
+- A package manager — `bun` is used here, but `npm`/`yarn` work too
 
 ### Install and run
 
 ```bash
-pnpm install      # install dependencies
-pnpm dev          # start the dev server at http://localhost:3000
+bun install      # install dependencies
+bun dev          # start the dev server at http://localhost:3000
 ```
 
 The page hot-reloads as you edit. When you add or rename files under
@@ -64,11 +64,11 @@ automatically.
 
 | Script          | What it does                                     |
 | --------------- | ------------------------------------------------ |
-| `pnpm dev`      | Start the Vite dev server                        |
-| `pnpm build`    | Build the static site to `dist/client`           |
-| `pnpm serve`    | Preview the production build locally             |
-| `pnpm test`     | Run the Vitest suite                             |
-| `pnpm lint`     | Lint `src` with oxlint                           |
+| `bun dev`       | Start the Vite dev server                        |
+| `bun build`     | Build the static site to `dist/client`           |
+| `bun serve`     | Preview the production build locally             |
+| `bun test`      | Run the Vitest suite                             |
+| `bun lint`      | Lint `src` with oxlint                           |
 
 ---
 
@@ -223,8 +223,8 @@ test('renders label and value', () => {
 ## Building and deploying
 
 ```bash
-pnpm build     # outputs a static site to dist/client
-pnpm serve     # preview it locally
+bun build     # outputs a static site to dist/client
+bun serve     # preview it locally
 ```
 
 Deploy the **`dist/client`** folder to any static host. There are no server
