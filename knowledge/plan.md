@@ -44,6 +44,9 @@ dashboard templates built on SolidJS 2.x.
   layer (`client.ts` + one function per endpoint), `lib/queries/keys.ts`,
   `src/hooks/*` TanStack Query wrappers, `QueryClientProvider` in `App.tsx`,
   and `@tanstack/solid-query` added as a dependency.
+- Project skills kept consistent with the code: `general`, `backend` (uses
+  `useQuery`/`useMutation` for the Query RC), and `theming` (D-007 tokens); all
+  registered in `AGENTS.md`.
 - Theming in `src/App.css`: custom daisyUI themes `admin` (light) and
   `admin-dark` (dark, prefers-color-scheme) plus semantic tokens
   (`--background`, `--foreground`, `--card`, `--card-foreground`, …) and a

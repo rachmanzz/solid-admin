@@ -24,6 +24,8 @@ chronological order (newest at the top).
 ## [Unreleased]
 
 ### Added
+- Skills made consistent with the installed TanStack Query RC (see Changed below):
+  new `.opencode/skills/theming/SKILL.md` documenting D-007 theme tokens/surfaces.
 - Theming in `src/App.css`: custom daisyUI themes `admin` (light, default) and
   `admin-dark` (dark, prefers-color-scheme) with all required `--color-*`,
   `--radius-*`, `--border`, `--depth`, `--noise` variables (indigo/blue primary).
@@ -57,6 +59,12 @@ chronological order (newest at the top).
   `decision-log.md`).
 
 ### Changed
+- `.opencode/skills/backend/SKILL.md` and `.opencode/skills/general/SKILL.md`:
+  corrected Query API names to the installed RC (`createQuery`→`useQuery`,
+  `createMutation`→`useMutation`) and fixed the `ApiResult` type reference in
+  the client example to `ErrorResponse`, matching the actual code.
+- `AGENTS.md` — project-skills list now includes the `backend` and `theming`
+  skills.
 - Moved the daisyUI agent skill from `.agents/skills/daisyui` to
   `.opencode/skills/daisyui` so opencode's native skill scanner picks it up.
 - `AGENTS.md` — added the mandatory "Non-Negotiable Rules" section (High-Care,

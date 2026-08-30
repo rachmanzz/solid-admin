@@ -34,7 +34,7 @@ src/
 │   │   └── keys.ts        # query key factories (single source of truth)
 │   └── utils.ts           # pure helpers (formatting, dates, no fetch)
 ├── hooks/
-│   ├── useUsers.ts        # createQuery/createMutation wrappers for users
+│   ├── useUsers.ts        # useQuery/useMutation wrappers for users
 │   └── useAuth.ts         # auth queries/mutations + session state
 └── routes/                # thin pages that consume hooks
 ```
@@ -78,7 +78,7 @@ thrown `ApiError`. It centralizes:
 ```ts
 // lib/api/client.ts
 import { API_BASE_URL } from '../constants';
-import type { ApiError, ApiResult } from './types';
+import type { ApiError, ErrorResponse } from './types';
 
 export async function request<T>(path: string, init: RequestInit = {}): Promise<T> {
   const res = await fetch(`${API_BASE_URL}${path}`, {
@@ -86,7 +86,7 @@ export async function request<T>(path: string, init: RequestInit = {}): Promise<
     headers: { 'Content-Type': 'application/json', ...init.headers },
     signal: init.signal ?? AbortSignal.timeout(10_000),
   });
-  const body = (await res.json().catch(() => null)) as ApiResult | null;
+  const body = (await res.json().catch(() => null)) as ErrorResponse | null;
   if (!res.ok) {
     const err = new Error(body?.message ?? `Request failed (${res.status})`) as Error & { status?: number };
     (err as { status?: number }).status = res.status;
@@ -119,33 +119,40 @@ wipes every user query; `queryKeys.users.byId(id)` wipes one.
 
 ### 4. `hooks/` — TanStack Query glue. The only layer that calls Query.
 
-- A hook wraps `createQuery` (reads) or `createMutation` (writes) around a
+> API note: this project uses `@tanstack/solid-query@6.0.0-rc.1` (as required for
+> Solid 2 RC). Its hooks are named `useQuery` / `useMutation` / `useQueryClient`
+> — **not** the older v5 `createQuery` / `createMutation`. Use the `use*` names.
+
+- A hook wraps `useQuery` (reads) or `useMutation` (writes) around a
   `lib/api` function and owns the query key + invalidation.
-- **Routes and components never call `fetch` or `createQuery` directly** — they
+- **Routes and components never call `fetch` or `useQuery` directly** — they
   call hooks. This keeps the data contract in one place per resource.
 - Reads:
 
 ```tsx
 // hooks/useUsers.ts
-import { createQuery } from '@tanstack/solid-query';
+import { useQuery } from '@tanstack/solid-query';
 import { fetchUsers, fetchUser } from '../lib/api/users';
 import { queryKeys } from '../lib/queries/keys';
 
 export function useUsers() {
-  return createQuery(() => ({ queryKey: queryKeys.users.all, queryFn: fetchUsers }));
+  return useQuery(() => ({ queryKey: queryKeys.users.all, queryFn: fetchUsers }));
 }
 
 export function useUser(id: () => string) {
-  return createQuery(() => ({ queryKey: queryKeys.users.byId(id()), queryFn: () => fetchUser(id()) }));
+  return useQuery(() => ({ queryKey: queryKeys.users.byId(id()), queryFn: () => fetchUser(id()) }));
 }
 ```
+
+Note the options are passed as an accessor (`() => ({...})`) so they are reactive
+(Solid reads the query key/params dynamically). Mutations follow the same shape.
 
 - Writes (mutations) must invalidate/update the affected queries:
 
 ```tsx
 export function useCreateUser() {
   const queryClient = useQueryClient();
-  return createMutation(() => ({
+  return useMutation(() => ({
     mutationFn: createUser,
     onSuccess: () => queryClient.invalidateQueries({ queryKey: queryKeys.users.all }),
   }));
@@ -170,7 +177,7 @@ return (
 
 ### 6. `components/ui/` — stays pure.
 
-Never import `hooks/`, `lib/api`, or `createQuery` into `components/ui`. UI atoms
+Never import `hooks/`, `lib/api`, or `useQuery` into `components/ui`. UI atoms
 receive data via props. This keeps the component layer reusable and trivially
 testable.
 

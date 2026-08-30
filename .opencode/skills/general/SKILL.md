@@ -15,21 +15,19 @@ A module, component, file, or function should have **one reason to change**. If 
 
 **API / fetch structure:** each API function should call one endpoint and return one shaped response. `fetchUser(id)` calls `/users/:id` and returns a `User` — it does not cache, retry, or transform. Keep the fetch layer thin so it is reusable and testable. Co-locate related API calls in a single module (`lib/api/users.ts`) but one function per endpoint.
 
-**TanStack Query usage:** TanStack Query handles caching, retries, background refetching, and stale-while-revalidate — so your components do not have to. Use `createQuery` for data reads and `createMutation` for writes. The query key encodes *what* was fetched; the query function is a thin wrapper around your API layer. Never mix fetch logic with query orchestration. Example pattern:
+**TanStack Query usage:** TanStack Query handles caching, retries, background refetching, and stale-while-revalidate — so your components do not have to. Use `useQuery` for data reads and `useMutation` for writes (this project uses `@tanstack/solid-query@6.0.0-rc.1`, which uses the `use*` names, not v5's `create*`). The query key encodes *what* was fetched; the query function is a thin wrapper around your API layer. Queries live in `src/hooks/`, never inline in a route. Example pattern:
 
 ```tsx
-// lib/api/users.ts
-export async function fetchUser(id: string): Promise<User> {
-  const res = await fetch(`/users/${id}`);
-  if (!res.ok) throw new Error('Failed to fetch user');
-  return res.json();
+// src/hooks/useUsers.ts
+export function useUser(id: () => string) {
+  return useQuery(() => ({
+    queryKey: queryKeys.users.byId(id()),
+    queryFn: () => fetchUser(id()),
+  }));
 }
 
 // src/routes/users.$id.tsx
-const userQuery = createQuery(() => ({
-  queryKey: ['user', params.id],
-  queryFn: () => fetchUser(params.id),
-}));
+const user = useUser(() => params.id);
 ```
 
 ---
@@ -58,7 +56,7 @@ Duplication is not a code smell — **premature abstraction** is. Two identical 
 
 **When to extract:** when you need to change the same logic in two places, or when three or more call sites share the same structure with different values (data-driven, not copy-paste driven). A `StatCard` used three times with different labels is fine as a component; a `StatCard` that also fetches, formats, and animates is not a component — it is a feature.
 
-**Concrete pattern in this project:** if a `createQuery` call appears in two routes with the same `queryKey` and `queryFn`, move the query into a shared hook (`useUserQuery`) or a shared function (`fetchUsers`). If two components render the same table structure with different data, extract a `DataTable<T>` component with generic props. Do not abstract until the pattern has appeared at least twice with clear intent to change together.
+**Concrete pattern in this project:** if a `useQuery` call appears in two routes with the same `queryKey` and `queryFn`, move the query into a shared hook (`useUserQuery`) or a shared function (`fetchUsers`). If two components render the same table structure with different data, extract a `DataTable<T>` component with generic props. Do not abstract until the pattern has appeared at least twice with clear intent to change together.
 
 ---
 
@@ -105,7 +103,7 @@ Every layer of the application should own exactly one concern. Conventions in th
 | Query hook  | Cache key + query function          | Fetch implementation, UI rendering |
 | CSS (Tailwind) | Visual presentation             | Behavior, data flow                |
 
-If you find a route file importing `fetch()` directly, extract it to an API module. If you find a component calling `createQuery`, move the query to a hook. If you find a CSS file containing JavaScript, something has gone very wrong.
+If you find a route file importing `fetch()` directly, extract it to an API module. If you find a component calling `useQuery`, move the query to a hook. If you find a CSS file containing JavaScript, something has gone very wrong.
 
 ---
 
@@ -115,7 +113,7 @@ Fail loudly in development. Fail gracefully in production. Never swallow errors 
 
 **Pattern for API calls:** let TanStack Query handle retries and error states. The query object exposes `isError`, `error`, and `status` — use them in the UI to show a meaningful message, not a blank screen.
 
-**Pattern for mutations:** `createMutation` has `onError` and `onSuccess` callbacks. Show a toast or inline error on failure; invalidate the relevant query on success. Never leave the user staring at a spinner after a failed mutation.
+**Pattern for mutations:** `useMutation` has `onError` and `onSuccess` callbacks. Show a toast or inline error on failure; invalidate the relevant query on success. Never leave the user staring at a spinner after a failed mutation.
 
 **Pattern for components:** if a component receives invalid props, log a warning in development (`console.warn`) but render gracefully — do not throw. The exception is data-shape mismatches from API responses, where failing fast prevents silent corruption.
 
@@ -173,4 +171,4 @@ export default function StatCard(props: { label: string; value: string; trend?: 
 }
 ```
 
-**Incorrect example:** a `StatCard` that also calls `createQuery`, reads the router, or formats with a library — it now has three reasons to change. Keep data fetching out of `components/ui`; put shared data hooks in `src/hooks/` and fetch contracts in `src/lib/api/`.
+**Incorrect example:** a `StatCard` that also calls `useQuery`, reads the router, or formats with a library — it now has three reasons to change. Keep data fetching out of `components/ui`; put shared data hooks in `src/hooks/` and fetch contracts in `src/lib/api/`.
