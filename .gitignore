@@ -1,4 +1,5 @@
 dist
+.tanstack
 .wrangler
 .output
 .vercel

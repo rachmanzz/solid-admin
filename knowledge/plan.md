@@ -69,7 +69,11 @@ dashboard templates built on SolidJS 2.x.
       components instead of plain custom classes.
 - [x] Reusable admin layout: icon sidebar with desktop collapse + mobile drawer,
       centralized menu config, and a consistent navbar (D-009).
-- [x] Ensure all components co-locate a Vitest test.
+- [x] Sidebar submenus with accordion (expanded) and flyout (collapsed) (D-012).
+- [x] Accessibility: inert/aria-hidden on closed mobile drawer; flyout keyboard
+      navigation and ARIA roles.
+- [ ] Ensure all components co-locate a Vitest test (Sidebar, Card, PageHeader,
+      profiles hook pending).
 - [x] Solid 2 context API fix: use context directly as provider (D-010).
 - [x] Visual polish: shadow depth, active state tint, search background (D-011).
 - [ ] Turn the `docs/` + `knowledge/` into a graphify knowledge graph.

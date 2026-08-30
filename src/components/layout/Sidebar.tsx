@@ -5,6 +5,28 @@ import { Link, useLocation } from '@tanstack/solid-router';
 import { icons, menuItems, type MenuItem } from './menu';
 import { useLayout } from './layout-context';
 
+function useFocusableItems(container: () => HTMLElement | undefined) {
+  const focusables = () => {
+    const el = container();
+    if (!el) return [];
+    return Array.from(el.querySelectorAll<HTMLElement>('a[href], button:not([disabled])'));
+  };
+
+  const focusFirst = () => focusables()[0]?.focus();
+  const focusNext = () => {
+    const items = focusables();
+    const idx = items.indexOf(document.activeElement as HTMLElement);
+    if (idx < items.length - 1) items[idx + 1]?.focus();
+  };
+  const focusPrev = () => {
+    const items = focusables();
+    const idx = items.indexOf(document.activeElement as HTMLElement);
+    if (idx > 0) items[idx - 1]?.focus();
+  };
+
+  return { focusFirst, focusNext, focusPrev };
+}
+
 // Brand/logo block at the top of the sidebar. Collapses to an icon only.
 function Brand(props: { collapsed: boolean }) {
   const logo = (
@@ -101,6 +123,33 @@ function ParentItem(props: MenuListProps & { item: MenuItem }) {
   const active = () => isActivePath(props.item, props.pathname);
   const isOpen = () => props.openKeys().includes(props.item.route) || active();
   const flyoutOpen = () => props.collapsed && props.flyoutKey() === props.item.route;
+  let flyoutRef: HTMLDivElement | undefined;
+
+  const { focusFirst, focusNext, focusPrev } = useFocusableItems(() => flyoutRef);
+
+  const handleFlyoutKey = (e: KeyboardEvent) => {
+    if (!flyoutOpen()) return;
+    if (e.key === 'Escape') {
+      e.preventDefault();
+      props.setFlyoutKey(null);
+      return;
+    }
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      focusNext();
+    }
+    if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      focusPrev();
+    }
+  };
+
+  createEffect(
+    () => flyoutOpen(),
+    (open) => {
+      if (open) focusFirst();
+    },
+  );
 
   return (
     <li class={props.collapsed ? 'relative w-full! flex! items-center! justify-center! px-2' : undefined}>
@@ -112,6 +161,8 @@ function ParentItem(props: MenuListProps & { item: MenuItem }) {
             : props.toggleKey(props.item.route)
         }
         title={props.collapsed ? props.item.label : undefined}
+        aria-expanded={flyoutOpen() ? 'true' : undefined}
+        aria-haspopup="menu"
         class={[
           'transition-colors',
           props.collapsed
@@ -135,7 +186,12 @@ function ParentItem(props: MenuListProps & { item: MenuItem }) {
       </Show>
 
       <Show when={flyoutOpen()}>
-        <div class="absolute left-full top-0 z-50 ml-2 w-48 flex! flex-col! rounded-xl border border-(--border) bg-base-100 p-2 shadow-lg">
+        <div
+          ref={flyoutRef}
+          role="menu"
+          onKeyDown={handleFlyoutKey}
+          class="absolute left-full top-0 z-50 ml-2 w-48 flex! flex-col! rounded-xl border border-(--border) bg-base-100 p-2 shadow-lg"
+        >
           <span class="mb-1 block px-3 pt-1 text-xs font-semibold uppercase tracking-wider text-(--muted-foreground)">
             {props.item.label}
           </span>
@@ -143,6 +199,7 @@ function ParentItem(props: MenuListProps & { item: MenuItem }) {
             {(child) => (
               <Link
                 to={child.route}
+                role="menuitem"
                 activeOptions={{ exact: child.exact ?? false }}
                 onClick={() => {
                   props.closeMobile();

@@ -24,6 +24,26 @@ chronological order (newest at the top).
 ## [Unreleased]
 
 ### Added
+- Profiles API module (`src/lib/api/profiles.ts`) with `fetchUserProfile(id)`
+  and `useUserProfile` hook for user profile data via TanStack Query.
+- Accessibility improvements: mobile drawer now has `inert` and `aria-hidden`
+  when closed; flyout menus have `role="menu"`, `role="menuitem"`,
+  `aria-expanded`, `aria-haspopup="menu"`, and keyboard navigation (ArrowUp,
+  ArrowDown, Escape).
+- Test coverage: `Card.test.tsx`, `PageHeader.test.tsx`, `profiles.test.ts`,
+  `Sidebar.test.tsx`.
+
+### Fixed
+- `.gitignore` now includes `.tanstack/` (router cache directory).
+
+### Changed
+- `users.$id.tsx` route now uses `useUserProfile` hook instead of direct fetch,
+  matching the project's data-layer conventions (backend skill).
+- Updated `responsive/SKILL.md` to document the current sidebar collapse/flyout
+  patterns and accessibility attributes.
+- Updated `plan.md` to reflect D-012 completion and pending test-coverage work.
+
+### Added
 - Sidebar submenus (D-012): `MenuItem` gains `children?: MenuItem[]` and the
   menu renders recursively. Parents become accordion toggles (expanded mode)
   with a rotating chevron and auto-open when the active route lives under them;

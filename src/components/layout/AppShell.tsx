@@ -34,6 +34,8 @@ function Shell(props: ParentProps) {
             'fixed inset-y-0 left-0 z-50 transition-transform duration-200',
             mobileOpen() ? 'translate-x-0' : '-translate-x-full',
           ]}
+          inert={mobileOpen() ? undefined : true}
+          aria-hidden={mobileOpen() ? undefined : 'true'}
         >
           <Sidebar forceFull />
         </aside>

@@ -22,6 +22,24 @@ Recorded decisions for **solid-admin**, with their context and rationale. Each
 entry follows the ADR-style format: **Decision**, **Context**, **Consequence**.
 Newest decision is at the top.
 
+## D-013: Accessibility — inert/aria-hidden on closed drawer, flyout ARIA
+
+- **Context:** The mobile drawer in `AppShell.tsx` was always in the DOM and
+  focusable even when hidden, violating WCAG 2.1 (focus should not move to
+  hidden content). The collapsed sidebar flyout lacked keyboard navigation
+  and ARIA semantics.
+- **Decision:** (1) Add `inert` and `aria-hidden="true"` to the mobile drawer
+  `<aside>` when `mobileOpen()` is false. Solid JSX requires `inert={true}`
+  (not `inert=""`) and `aria-hidden="true"` (not `aria-hidden={true}`). (2) Add
+  `aria-haspopup="menu"` and `aria-expanded` on parent item buttons, `role="menu"`
+  on the flyout container, `role="menuitem"` on child links, plus keyboard
+  handlers for ArrowUp/ArrowDown/Escape. Focus moves to the first item when the
+  flyout opens.
+- **Consequence:** Mobile drawer is properly hidden from assistive tech when
+  closed. Flyout menus are keyboard-accessible and announce correctly. The
+  `inert` attribute is a boolean in Solid JSX, so explicit `true`/`undefined`
+  must be used instead of omitting the attribute.
+
 ## D-012: Sidebar submenus — recursive data model + accordion/flyout
 
 - **Context:** The admin menu was flat (`MenuItem` = label/route/exact/icon).

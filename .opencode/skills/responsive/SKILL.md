@@ -31,10 +31,16 @@ require desktop width (e.g. deep data-grid editing).
 
 ## Patterns in this codebase (match these)
 
-- **Sidebar / navigation collapse:** `AppShell.tsx` uses a daisyUI `drawer` with
-  `lg:drawer-open` — the sidebar is a slide-over drawer on mobile and a fixed
-  panel on `lg`+. `Navbar.tsx` hides its drawer-toggle behind `lg:hidden` (only
-  shown on small screens).
+- **Sidebar / navigation collapse:** `AppShell.tsx` implements a custom drawer:
+  - Desktop (`lg:`+): fixed sidebar that collapses to icon-only (`w-16`) via a
+    toggle in `Navbar.tsx`. Collapsed items with children show a flyout menu on
+    click with keyboard navigation (ArrowUp/Down, Escape) and ARIA attributes
+    (`role="menu"`, `role="menuitem"`, `aria-expanded`, `aria-haspopup`).
+  - Mobile (< `lg`): slide-over drawer controlled by `mobileOpen` signal in
+    `layout-context.tsx`. The drawer has `inert` and `aria-hidden` when closed
+    to prevent focus and screen-reader access.
+  - `Navbar.tsx` hides its drawer-toggle behind `lg:hidden` (only shown on small
+    screens).
 - **Stat groups:** `index.tsx` uses `sm:stats-horizontal` so stat cards sit
   vertically on mobile and go side-by-side from `sm` up.
 - **Page padding/content:** use responsive utilities so content breathes on
