@@ -24,6 +24,14 @@ chronological order (newest at the top).
 ## [Unreleased]
 
 ### Added
+- Theming in `src/App.css`: custom daisyUI themes `admin` (light, default) and
+  `admin-dark` (dark, prefers-color-scheme) with all required `--color-*`,
+  `--radius-*`, `--border`, `--depth`, `--noise` variables (indigo/blue primary).
+- Semantic alias tokens on `:root`/`[data-theme="admin-dark"]`: `--background`,
+  `--foreground`, `--card`, `--card-foreground`, `--muted(/-foreground)`,
+  `--border`, `--primary(/-foreground)`, `--success(/-foreground)`, etc.
+- Specialized `.card` style (`@layer components`) using `--card`, `--card-foreground`,
+  `--border`, and `--radius` as a consistent surface.
 - Backend/API organization: `src/lib/api/` fetch layer (`client.ts`, `users.ts`,
   `auth.ts`, `types.ts`), `lib/constants.ts`, `lib/utils.ts`, `lib/queries/keys.ts`
   (query key factory), and `src/hooks/` wrappers (`useUsers`, `useAuth`).

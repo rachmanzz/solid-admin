@@ -1,2 +1,149 @@
 @import "tailwindcss";
 @plugin "daisyui";
+
+@plugin "daisyui/theme" {
+  name: "admin";
+  default: true;
+  prefersdark: false;
+  color-scheme: light;
+
+  --color-base-100: oklch(98% 0.005 255);
+  --color-base-200: oklch(95% 0.008 255);
+  --color-base-300: oklch(90% 0.012 255);
+  --color-base-content: oklch(21% 0.02 255);
+  --color-primary: oklch(52% 0.22 262);
+  --color-primary-content: oklch(98% 0.005 255);
+  --color-secondary: oklch(70% 0.14 262);
+  --color-secondary-content: oklch(98% 0.005 255);
+  --color-accent: oklch(65% 0.18 285);
+  --color-accent-content: oklch(98% 0.005 255);
+  --color-neutral: oklch(50% 0.02 255);
+  --color-neutral-content: oklch(98% 0.005 255);
+  --color-info: oklch(70% 0.15 245);
+  --color-info-content: oklch(98% 0.005 255);
+  --color-success: oklch(65% 0.18 150);
+  --color-success-content: oklch(98% 0.005 255);
+  --color-warning: oklch(80% 0.15 85);
+  --color-warning-content: oklch(25% 0.05 85);
+  --color-error: oklch(60% 0.2 25);
+  --color-error-content: oklch(98% 0.005 255);
+
+  --radius-selector: 0.25rem;
+  --radius-field: 0.5rem;
+  --radius-box: 1rem;
+
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+
+  --border: 1px;
+
+  --depth: 1;
+  --noise: 0;
+}
+
+@plugin "daisyui/theme" {
+  name: "admin-dark";
+  default: false;
+  prefersdark: true;
+  color-scheme: dark;
+
+  --color-base-100: oklch(20% 0.02 262);
+  --color-base-200: oklch(24% 0.025 262);
+  --color-base-300: oklch(29% 0.03 262);
+  --color-base-content: oklch(92% 0.02 262);
+  --color-primary: oklch(65% 0.2 262);
+  --color-primary-content: oklch(20% 0.02 262);
+  --color-secondary: oklch(55% 0.12 262);
+  --color-secondary-content: oklch(98% 0.005 255);
+  --color-accent: oklch(65% 0.15 285);
+  --color-accent-content: oklch(20% 0.02 262);
+  --color-neutral: oklch(75% 0.02 262);
+  --color-neutral-content: oklch(20% 0.02 262);
+  --color-info: oklch(70% 0.15 245);
+  --color-info-content: oklch(20% 0.02 262);
+  --color-success: oklch(65% 0.16 150);
+  --color-success-content: oklch(20% 0.02 262);
+  --color-warning: oklch(80% 0.14 85);
+  --color-warning-content: oklch(20% 0.02 262);
+  --color-error: oklch(62% 0.2 25);
+  --color-error-content: oklch(20% 0.02 262);
+
+  --radius-selector: 0.25rem;
+  --radius-field: 0.5rem;
+  --radius-box: 1rem;
+
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+
+  --border: 1px;
+
+  --depth: 1;
+  --noise: 0;
+}
+
+/* Semantic theme tokens. These alias daisyUI's theme variables with friendly
+   names so the rest of the CSS can read background/foreground/card directly.
+   Light values live on :root (the "admin" default theme); dark values live on
+   [data-theme="admin-dark"]. */
+:root,
+[data-theme="admin"] {
+  --background: var(--color-base-100);
+  --foreground: var(--color-base-content);
+  --card: var(--color-base-200);
+  --card-foreground: var(--color-base-content);
+  --muted: var(--color-base-200);
+  --muted-foreground: color-mix(in oklab, var(--color-base-content) 60%, transparent);
+  --border: var(--color-base-300);
+  --radius: var(--radius-box);
+  --primary: var(--color-primary);
+  --primary-foreground: var(--color-primary-content);
+  --secondary: var(--color-secondary);
+  --secondary-foreground: var(--color-secondary-content);
+  --accent: var(--color-accent);
+  --accent-foreground: var(--color-accent-content);
+  --info: var(--color-info);
+  --info-foreground: var(--color-info-content);
+  --success: var(--color-success);
+  --success-foreground: var(--color-success-content);
+  --warning: var(--color-warning);
+  --warning-foreground: var(--color-warning-content);
+  --error: var(--color-error);
+  --error-foreground: var(--color-error-content);
+}
+
+[data-theme="admin-dark"] {
+  --background: var(--color-base-100);
+  --foreground: var(--color-base-content);
+  --card: var(--color-base-200);
+  --card-foreground: var(--color-base-content);
+  --muted: var(--color-base-200);
+  --muted-foreground: color-mix(in oklab, var(--color-base-content) 60%, transparent);
+  --border: var(--color-base-300);
+  --radius: var(--radius-box);
+  --primary: var(--color-primary);
+  --primary-foreground: var(--color-primary-content);
+  --secondary: var(--color-secondary);
+  --secondary-foreground: var(--color-secondary-content);
+  --accent: var(--color-accent);
+  --accent-foreground: var(--color-accent-content);
+  --info: var(--color-info);
+  --info-foreground: var(--color-info-content);
+  --success: var(--color-success);
+  --success-foreground: var(--color-success-content);
+  --warning: var(--color-warning);
+  --warning-foreground: var(--color-warning-content);
+  --error: var(--color-error);
+  --error-foreground: var(--color-error-content);
+}
+
+/* Specialized card style. Applied in the components layer so daisyUI utility
+   classes (bg-base-100, shadow) still win where present; this provides the
+   themed card/foreground tokens, border, and radius as a consistent surface. */
+@layer components {
+  .card {
+    background-color: var(--card);
+    color: var(--card-foreground);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+  }
+}

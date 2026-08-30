@@ -22,6 +22,22 @@ Recorded decisions for **solid-admin**, with their context and rationale. Each
 entry follows the ADR-style format: **Decision**, **Context**, **Consequence**.
 Newest decision is at the top.
 
+## D-007: Custom daisyUI themes with semantic tokens in `src/App.css`
+
+- **Context:** The admin needs a consistent theming system — CSS variables for
+  background/foreground/card and a distinct card surface — across light and
+  dark modes, following daisyUI 5.
+- **Decision:** Define two custom daisyUI themes via `@plugin "daisyui/theme"`
+  (`admin` light default, `admin-dark` via `prefersdark`) carrying all required
+  `--color-*`/`--radius-*`/`--border` variables, then alias them with friendly
+  semantic names (`--background`, `--foreground`, `--card`, `--card-foreground`,
+  `--muted`, `--border`, …) on `:root` and `[data-theme="admin-dark"]`. A `.card`
+  `@layer components` style applies the card tokens as a consistent surface.
+- **Consequence:** Components can read semantic tokens directly while daisyUI
+  utility classes still work. The `.card` layer is additive (utilities win), so
+  existing cards are not regressed. Dark mode follows the OS via
+  `prefers-color-scheme`.
+
 ## D-006: Layered backend/API handling via TanStack Query
 
 - **Context:** The admin app needs a consistent way to fetch, cache, and mutate
