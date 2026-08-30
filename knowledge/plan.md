@@ -48,9 +48,12 @@ dashboard templates built on SolidJS 2.x.
   `useQuery`/`useMutation` for the Query RC), and `theming` (D-007 tokens); all
   registered in `AGENTS.md`.
 - Theming in `src/App.css`: custom daisyUI themes `admin` (light) and
-  `admin-dark` (dark, prefers-color-scheme) plus semantic tokens
+  `admin-dark` (dark) plus semantic tokens
   (`--background`, `--foreground`, `--card`, `--card-foreground`, …) and a
   specialized `.card` surface style.
+- Theme applied at runtime: `src/lib/theme.ts` sets `data-theme` (`admin`/
+  `admin-dark`) from `localStorage`/`prefers-color-scheme`; wired in `App.tsx`.
+  (D-008: this daisyUI version needs explicit activation, no auto prefersdark.)
 
 ## Short-term goals
 

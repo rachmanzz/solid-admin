@@ -24,6 +24,12 @@ chronological order (newest at the top).
 ## [Unreleased]
 
 ### Added
+- Theme applied to the admin app: new `src/lib/theme.ts` resolves `admin` vs
+  `admin-dark` from a `localStorage` override else `prefers-color-scheme`, and
+  sets `data-theme` on `<html>`; `src/App.tsx` calls `applyTheme()` +
+  `watchSystemTheme()` in `onSettled`; `src/Document.tsx` initial shell now
+  uses `data-theme="admin"`. (daisyUI here does not auto-switch dark, so the
+  theme must be set at runtime.)
 - Skills made consistent with the installed TanStack Query RC (see Changed below):
   new `.opencode/skills/theming/SKILL.md` documenting D-007 theme tokens/surfaces.
 - Theming in `src/App.css`: custom daisyUI themes `admin` (light, default) and

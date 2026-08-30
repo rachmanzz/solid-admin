@@ -22,6 +22,23 @@ Recorded decisions for **solid-admin**, with their context and rationale. Each
 entry follows the ADR-style format: **Decision**, **Context**, **Consequence**.
 Newest decision is at the top.
 
+## D-008: Runtime theme activation via `src/lib/theme.ts`
+
+- **Context:** The custom daisyUI themes (`admin`/`admin-dark`) existed in
+  `src/App.css` but were not applied — `src/Document.tsx` hardcoded
+  `data-theme="light"`, and the installed daisyUI version does not auto-switch
+  the dark theme via a `prefers-color-scheme` media query (`prefersdark` emits
+  none), so `admin-dark` stayed inert.
+- **Decision:** Activate themes explicitly at runtime: `src/lib/theme.ts`
+  resolves `admin`/`admin-dark` from a `localStorage` override (`theme` =
+  `light`|`dark`) else `prefers-color-scheme`, sets
+  `document.documentElement.dataset.theme`, and `watchSystemTheme()` follows OS
+  changes. `src/App.tsx` wires it in `onSettled`; `src/Document.tsx` uses
+  `data-theme="admin"` as the initial shell.
+- **Consequence:** Light default, dark follows the OS, with an optional
+  persistent override. `onMount` was renamed `onSettled` in Solid 2 (used here).
+  Theming skill updated to reflect explicit activation.
+
 ## D-007: Custom daisyUI themes with semantic tokens in `src/App.css`
 
 - **Context:** The admin needs a consistent theming system — CSS variables for

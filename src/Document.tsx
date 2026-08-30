@@ -10,7 +10,7 @@ import { HydrationScript } from '@solidjs/web';
 // needed. Delete this file to fall back to the plugin's built-in shell.
 export default function Document(props: ParentProps) {
   return (
-    <html lang="en" data-theme="light">
+    <html lang="en" data-theme="admin">
       <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />

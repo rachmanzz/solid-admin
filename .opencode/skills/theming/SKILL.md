@@ -26,7 +26,7 @@ The system has three parts:
 Defined via `@plugin "daisyui/theme"` (per the daisyUI colors/conventions):
 
 - `admin` — light, `default: true`.
-- `admin-dark` — dark, `prefersdark: true` (applies via `prefers-color-scheme: dark`).
+- `admin-dark` — dark.
 
 Each theme block must set **all** required variables: `--color-base-100/200/300`,
 `--color-base-content`, `--color-primary(/-content)`, `--color-secondary(/-content)`,
@@ -35,9 +35,20 @@ Each theme block must set **all** required variables: `--color-base-100/200/300`
 plus `--radius-selector/field/box`, `--size-selector/field`, `--border`, `--depth`,
 `--noise`. Use OKLCH. Set `color-scheme` to `light`/`dark` for browser UI.
 
-To switch themes: set `data-theme="admin"` or `data-theme="admin-dark"` on
-`<html>` or a nested element. `admin` is also the `:root` default; `admin-dark`
-activates automatically on dark OS preference.
+**Activation is explicit.** In this daisyUI version the theme is applied by
+`data-theme` on the root — it does **not** auto-switch via a
+`prefers-color-scheme` media query (the `prefersdark` option does not emit one
+here). The app handles this at runtime:
+
+- `src/Document.tsx` renders `<html data-theme="admin">` as the initial shell.
+- `src/lib/theme.ts` resolves `admin` vs `admin-dark` from a `localStorage`
+  override (`theme` = `light` | `dark`) else `prefers-color-scheme`, sets
+  `document.documentElement.dataset.theme`, and `watchSystemTheme()` keeps it in
+  sync with OS changes.
+- `src/App.tsx` calls `applyTheme()` + `watchSystemTheme()` in `onSettled`.
+
+So set `data-theme="admin"`/`"admin-dark"` to switch themes; reuse
+`src/lib/theme.ts` rather than re-implementing resolution.
 
 ## Semantic tokens
 
