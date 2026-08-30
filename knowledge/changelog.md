@@ -24,6 +24,9 @@ chronological order (newest at the top).
 ## [Unreleased]
 
 ### Added
+- `.opencode/skills/responsive/SKILL.md` — mobile-first responsive conventions
+  (Tailwind breakpoint prefixes, drawer/sidebar collapse, dense tables; applies
+  when a feature is capable of RWD, not forced onto non-capable admin surfaces).
 - Theme applied to the admin app: new `src/lib/theme.ts` resolves `admin` vs
   `admin-dark` from a `localStorage` override else `prefers-color-scheme`, and
   sets `data-theme` on `<html>`; `src/App.tsx` calls `applyTheme()` +

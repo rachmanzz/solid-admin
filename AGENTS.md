@@ -68,6 +68,7 @@ The project ships agent skills that encode engineering conventions for this code
 - `.opencode/skills/general/SKILL.md` — core engineering principles (SRP, KISS, DRY, YAGNI, composition, separation of concerns, error handling, testing). Read this before creating, reviewing, or refactoring any non-trivial code. It defines *when* to split, *when* to extract, and the concrete patterns expected in this project.
 - `.opencode/skills/backend/SKILL.md` — conventions for API/backend handling (fetch layer in `src/lib/api/`, TanStack Query hooks in `src/hooks/`, query keys, how routes consume data). Read before writing or refactoring any fetch/query/data code.
 - `.opencode/skills/theming/SKILL.md` — conventions for the theme system (custom daisyUI themes `admin`/`admin-dark`, semantic color tokens, card surface in `src/App.css`). Read before writing or changing theme/color/styling code.
+- `.opencode/skills/responsive/SKILL.md` — mobile-first responsive conventions (Tailwind breakpoint prefixes, drawer/sidebar collapse, dense tables). Read before building or changing any layout that must adapt across screen sizes.
 
 ## Versioned skills (in node_modules — read on demand)
 
