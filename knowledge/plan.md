@@ -40,6 +40,10 @@ dashboard templates built on SolidJS 2.x.
 - Admin starter design: daisyUI drawer shell, dashboard, and users page.
 - Component library: `src/components/layout/*` (shell, navbar, sidebar, page
   header) and `src/components/ui/*` (card, stat card, data table, empty state).
+- Backend/API layer scaffolded (no live backend yet): `src/lib/api/*` fetch
+  layer (`client.ts` + one function per endpoint), `lib/queries/keys.ts`,
+  `src/hooks/*` TanStack Query wrappers, `QueryClientProvider` in `App.tsx`,
+  and `@tanstack/solid-query` added as a dependency.
 
 ## Short-term goals
 

@@ -22,6 +22,23 @@ Recorded decisions for **solid-admin**, with their context and rationale. Each
 entry follows the ADR-style format: **Decision**, **Context**, **Consequence**.
 Newest decision is at the top.
 
+## D-006: Layered backend/API handling via TanStack Query
+
+- **Context:** The admin app needs a consistent way to fetch, cache, and mutate
+  data once a real backend exists. Patterns for where HTTP lives, where query
+  logic lives, and how routes consume data were undefined.
+- **Decision:** Adopt a strict `lib/api → hooks → routes` layering: a thin fetch
+  layer in `src/lib/api/` (one function per endpoint, all delegating to a shared
+  `request()` wrapper that normalizes errors), TanStack Query wrapper hooks in
+  `src/hooks/` that own keys + invalidation via `lib/queries/keys.ts`, and thin
+  routes that consume hooks only. Chose `@tanstack/solid-query@6.0.0-rc.1` (the
+  only RC compatible with `solid-js 2.0.0-rc`; it uses `useQuery`/`useMutation`
+  names, not the v5 `createQuery`/`createMutation`).
+- **Consequence:** HTTP details live in one wrapper; caching/invalidation are
+  keyed consistently; `components/ui` stays pure. No live endpoints are wired
+  yet — `lib/api/*` and hooks are a compiling template to fill in as the backend
+  materializes.
+
 ## D-005: Static-only build contract
 
 - **Context:** The template ships client-mode (`start: true`, no SSR) and SSR is

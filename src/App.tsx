@@ -1,3 +1,4 @@
+import { QueryClient, QueryClientProvider } from '@tanstack/solid-query';
 import { RouterProvider, createRouter } from '@tanstack/solid-router';
 import './App.css';
 
@@ -19,8 +20,15 @@ declare module '@tanstack/solid-router' {
   }
 }
 
+const queryClient = new QueryClient();
+
 // The app root: the plugin's generated entries render this component,
-// wrapped in src/Document.tsx.
+// wrapped in src/Document.tsx. QueryClientProvider wraps the router so the
+// data hooks (useUsers, useAuth, …) work anywhere in the tree.
 export default function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+    </QueryClientProvider>
+  );
 }

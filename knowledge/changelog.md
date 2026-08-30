@@ -24,6 +24,14 @@ chronological order (newest at the top).
 ## [Unreleased]
 
 ### Added
+- Backend/API organization: `src/lib/api/` fetch layer (`client.ts`, `users.ts`,
+  `auth.ts`, `types.ts`), `lib/constants.ts`, `lib/utils.ts`, `lib/queries/keys.ts`
+  (query key factory), and `src/hooks/` wrappers (`useUsers`, `useAuth`).
+- `src/App.tsx` — wrapped the router in `QueryClientProvider`.
+- Added `@tanstack/solid-query@6.0.0-rc.1` dependency (Solid 2 RC compatible;
+  renamed APIs `useQuery`/`useMutation`).
+- `.opencode/skills/backend/SKILL.md` — new skill defining the fetch ↓ query ↓
+  route layering conventions.
 - Component library under `src/components/`: `layout/` (AppShell, Navbar,
   Sidebar, PageHeader) and `ui/` (Card, StatCard, DataTable, EmptyState).
 - Route files refactored to compose the new components; co-located tests for
