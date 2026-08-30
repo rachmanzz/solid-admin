@@ -58,7 +58,7 @@ function Home() {
         action={<button class="btn btn-primary">New report</button>}
       />
 
-      <div class="stats stats-vertical sm:stats-horizontal shadow w-full bg-base-100">
+      <div class="stats stats-vertical sm:stats-horizontal shadow-sm w-full bg-base-100">
         <For each={stats}>
           {(s) => <StatCard label={s.label} value={s.value} trend={s.trend} />}
         </For>

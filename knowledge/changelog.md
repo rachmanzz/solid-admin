@@ -24,6 +24,75 @@ chronological order (newest at the top).
 ## [Unreleased]
 
 ### Added
+- Sidebar submenus (D-012): `MenuItem` gains `children?: MenuItem[]` and the
+  menu renders recursively. Parents become accordion toggles (expanded mode)
+  with a rotating chevron and auto-open when the active route lives under them;
+  in collapsed mode a parent icon opens a flyout panel to the right
+  (`w-48`, `flex! flex-col!`, click-catcher overlay). Demo submenu under
+  `Orders` → All Orders `/orders`, Pending `/orders/pending`, Completed
+  `/orders/completed` (the two new placeholder pages reuse `PageHeader` +
+  `Card`). Fixed two traps: parent `item` leaking through `{...props}` in the
+  recursive render (children now get explicit props via `subMenuProps()`), and
+  daisyUI `.menu` `display:grid` flow on the flyout (overridden with
+  `flex! flex-col!`).
+
+### Fixed
+- Collapsed sidebar hover/highlight: 44px rounded highlight tiles now sit with
+  symmetric 10px left/right gutters and the icon is dead-center both axes (icon
+  center X = Y = 32px = shell center, verified by headless geometry capture).
+  Root cause of the earlier 2px/6px offsets: (1) TanStack Router `Link`
+  serializes a `class` **array** with commas, mangling `w-11!` etc., so the
+  `class` prop is now a single string; (2) daisyUI `.menu` makes `li`
+  `flex-direction: column`, so horizontal centering needs `align-items: center`
+  (`items-center!`), not `justify-content`; (3) daisyUI `.menu` anchor styles
+  had higher specificity than Tailwind utilities, so `flex! items-center!
+  justify-center! w-11! h-11! p-0!` (`!important` modifiers) are used on the
+  collapsed `Link`, with `w-full! flex! items-center! justify-center! px-2` on
+  the `li`. Refines the earlier centering fix (this entry supersedes the
+  mechanism described in the entry below).
+- Collapsed sidebar centering: menu items are now perfectly centered in the
+  `w-16` strip (shell center = 32px, icon center = 32px, verified by headless
+  geometry capture). The wrapper `ul` is `w-full items-center` with `p-0` and
+  each `li` is `w-full flex justify-center`, so the full-width rounded
+  highlight no longer sits off-center. Brand logo bumped to `w-10 h-10` to
+  match the 44px menu tiles.
+- Solid 2 context API: changed `<LayoutContext.Provider value={...}>` to
+  `<LayoutContext value={...}>` in `layout-context.tsx`. In Solid 2,
+  `createContext()` returns the provider function directly (no `.Provider`
+  property), so the old form compiled to `createComponent(undefined)` →
+  "Comp is not a function" on every route in production builds. Verified by
+  headless Chrome capture on all routes with no errors. See D-010.
+
+### Changed
+- Visual polish (D-011): sidebar `border-r` → `shadow-sm`; navbar `border-b`
+  → `shadow-sm`; active menu `bg-primary` → `bg-primary/10` (softer tint);
+  search input `bg-base-200` added; cards/stats `shadow` → `shadow-sm`;
+  dropdown `shadow-lg` added; brand logo `shadow-sm` added. All CSS/Tailwind
+  class edits only, no structural changes.
+
+### Added
+- Reusable admin layout made standard-panel-like: `src/components/layout/`
+  gains `layout-context.tsx` (`LayoutProvider`/`useLayout`) and `menu.tsx`
+  (single `menuItems` config + inline SVG icon set). `Sidebar` now has a brand
+  block, an icon menu (Dashboard, Users, Orders, Analytics, Settings), and an
+  icon-only desktop collapse (`w-16`) with a `forceFull` mode for the mobile
+  drawer. `Navbar` got a mobile-drawer toggle + desktop-collapse toggle plus a
+  consistent right side (search, notifications, user dropdown). `AppShell`
+  renders the collapsible desktop sidebar and a mobile slide-over drawer and no
+  longer takes a `sidebar` prop.
+- Placeholder routes `orders`, `analytics`, `settings` reusing
+  `PageHeader` + `Card` as named menu destinations.
+
+### Changed
+- `src/routes/__root.tsx` — removed the now-internal `Sidebar` import; content
+  area scrolls independently under a sticky `Navbar`.
+
+### Deprecated / Noted
+- A transient `createComponent` HMR error appeared during the multi-file layout
+  creation but does not occur in the final, consistent state (verified by
+  `vite build` and route-render tests). See D-009.
+
+### Added
 - `.opencode/skills/responsive/SKILL.md` — mobile-first responsive conventions
   (Tailwind breakpoint prefixes, drawer/sidebar collapse, dense tables; applies
   when a feature is capable of RWD, not forced onto non-capable admin surfaces).

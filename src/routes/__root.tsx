@@ -2,7 +2,6 @@ import { HeadContent, Outlet, createRootRoute } from '@tanstack/solid-router';
 
 import AppShell from '../components/layout/AppShell';
 import Navbar from '../components/layout/Navbar';
-import Sidebar from '../components/layout/Sidebar';
 
 // The root route: the site-wide admin shell every route renders inside, plus
 // the not-found boundary. <HeadContent /> renders whatever the matched routes
@@ -12,9 +11,9 @@ export const Route = createRootRoute({
   component: () => (
     <>
       <HeadContent />
-      <AppShell sidebar={<Sidebar />}>
+      <AppShell>
         <Navbar />
-        <main class="p-6 flex-1">
+        <main class="flex-1 overflow-y-auto p-6">
           <Outlet />
         </main>
       </AppShell>

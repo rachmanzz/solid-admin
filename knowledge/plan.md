@@ -37,7 +37,12 @@ dashboard templates built on SolidJS 2.x.
 - Static-only build (`vite build` → `dist/client`); no server runtime.
 - Documentation started: `docs/project-structures.md`, `docs/basic.md`,
   `README.md`, and a `knowledge/` base.
-- Admin starter design: daisyUI drawer shell, dashboard, and users page.
+- Admin shell: a reusable, standard-panel layout in `src/components/layout/*`
+  — icon sidebar with desktop icon-only collapse (`w-16`) + mobile slide-over
+  drawer (`layout-context.tsx` state), brand block, menu and icons centralized
+  in `menu.tsx`, and a consistent `Navbar` (drawer/collapse toggles, search,
+  notifications, user dropdown). Placeholder routes `orders`, `analytics`,
+  `settings` added as menu destinations.
 - Component library: `src/components/layout/*` (shell, navbar, sidebar, page
   header) and `src/components/ui/*` (card, stat card, data table, empty state).
 - Backend/API layer scaffolded (no live backend yet): `src/lib/api/*` fetch
@@ -62,7 +67,11 @@ dashboard templates built on SolidJS 2.x.
       `knowledge/decision-log.md` (this file set).
 - [x] Build out real admin screens (dashboard, users table, forms) using daisyUI
       components instead of plain custom classes.
+- [x] Reusable admin layout: icon sidebar with desktop collapse + mobile drawer,
+      centralized menu config, and a consistent navbar (D-009).
 - [x] Ensure all components co-locate a Vitest test.
+- [x] Solid 2 context API fix: use context directly as provider (D-010).
+- [x] Visual polish: shadow depth, active state tint, search background (D-011).
 - [ ] Turn the `docs/` + `knowledge/` into a graphify knowledge graph.
 
 ## Medium-term goals

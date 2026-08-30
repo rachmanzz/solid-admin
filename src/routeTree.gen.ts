@@ -10,7 +10,12 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AnalyticsRouteImport } from './routes/analytics'
+import { Route as OrdersRouteImport } from './routes/orders'
+import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as UsersRouteImport } from './routes/users'
+import { Route as OrdersCompletedRouteImport } from './routes/orders/completed'
+import { Route as OrdersPendingRouteImport } from './routes/orders/pending'
 import { Route as UsersIdRouteImport } from './routes/users.$id'
 
 const IndexRoute = IndexRouteImport.update({
@@ -18,10 +23,35 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AnalyticsRoute = AnalyticsRouteImport.update({
+  id: '/analytics',
+  path: '/analytics',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OrdersRoute = OrdersRouteImport.update({
+  id: '/orders',
+  path: '/orders',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const UsersRoute = UsersRouteImport.update({
   id: '/users',
   path: '/users',
   getParentRoute: () => rootRouteImport,
+} as any)
+const OrdersCompletedRoute = OrdersCompletedRouteImport.update({
+  id: '/completed',
+  path: '/completed',
+  getParentRoute: () => OrdersRoute,
+} as any)
+const OrdersPendingRoute = OrdersPendingRouteImport.update({
+  id: '/pending',
+  path: '/pending',
+  getParentRoute: () => OrdersRoute,
 } as any)
 const UsersIdRoute = UsersIdRouteImport.update({
   id: '/$id',
@@ -31,30 +61,73 @@ const UsersIdRoute = UsersIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/analytics': typeof AnalyticsRoute
+  '/orders': typeof OrdersRouteWithChildren
+  '/settings': typeof SettingsRoute
   '/users': typeof UsersRouteWithChildren
+  '/orders/completed': typeof OrdersCompletedRoute
+  '/orders/pending': typeof OrdersPendingRoute
   '/users/$id': typeof UsersIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/analytics': typeof AnalyticsRoute
+  '/orders': typeof OrdersRouteWithChildren
+  '/settings': typeof SettingsRoute
   '/users': typeof UsersRouteWithChildren
+  '/orders/completed': typeof OrdersCompletedRoute
+  '/orders/pending': typeof OrdersPendingRoute
   '/users/$id': typeof UsersIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/analytics': typeof AnalyticsRoute
+  '/orders': typeof OrdersRouteWithChildren
+  '/settings': typeof SettingsRoute
   '/users': typeof UsersRouteWithChildren
+  '/orders/completed': typeof OrdersCompletedRoute
+  '/orders/pending': typeof OrdersPendingRoute
   '/users/$id': typeof UsersIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/users' | '/users/$id'
+  fullPaths:
+    | '/'
+    | '/analytics'
+    | '/orders'
+    | '/settings'
+    | '/users'
+    | '/orders/completed'
+    | '/orders/pending'
+    | '/users/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/users' | '/users/$id'
-  id: '__root__' | '/' | '/users' | '/users/$id'
+  to:
+    | '/'
+    | '/analytics'
+    | '/orders'
+    | '/settings'
+    | '/users'
+    | '/orders/completed'
+    | '/orders/pending'
+    | '/users/$id'
+  id:
+    | '__root__'
+    | '/'
+    | '/analytics'
+    | '/orders'
+    | '/settings'
+    | '/users'
+    | '/orders/completed'
+    | '/orders/pending'
+    | '/users/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AnalyticsRoute: typeof AnalyticsRoute
+  OrdersRoute: typeof OrdersRouteWithChildren
+  SettingsRoute: typeof SettingsRoute
   UsersRoute: typeof UsersRouteWithChildren
 }
 
@@ -67,12 +140,47 @@ declare module '@tanstack/solid-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/analytics': {
+      id: '/analytics'
+      path: '/analytics'
+      fullPath: '/analytics'
+      preLoaderRoute: typeof AnalyticsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/orders': {
+      id: '/orders'
+      path: '/orders'
+      fullPath: '/orders'
+      preLoaderRoute: typeof OrdersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/users': {
       id: '/users'
       path: '/users'
       fullPath: '/users'
       preLoaderRoute: typeof UsersRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/orders/completed': {
+      id: '/orders/completed'
+      path: '/completed'
+      fullPath: '/orders/completed'
+      preLoaderRoute: typeof OrdersCompletedRouteImport
+      parentRoute: typeof OrdersRoute
+    }
+    '/orders/pending': {
+      id: '/orders/pending'
+      path: '/pending'
+      fullPath: '/orders/pending'
+      preLoaderRoute: typeof OrdersPendingRouteImport
+      parentRoute: typeof OrdersRoute
     }
     '/users/$id': {
       id: '/users/$id'
@@ -83,6 +191,19 @@ declare module '@tanstack/solid-router' {
     }
   }
 }
+
+interface OrdersRouteChildren {
+  OrdersCompletedRoute: typeof OrdersCompletedRoute
+  OrdersPendingRoute: typeof OrdersPendingRoute
+}
+
+const OrdersRouteChildren: OrdersRouteChildren = {
+  OrdersCompletedRoute: OrdersCompletedRoute,
+  OrdersPendingRoute: OrdersPendingRoute,
+}
+
+const OrdersRouteWithChildren =
+  OrdersRoute._addFileChildren(OrdersRouteChildren)
 
 interface UsersRouteChildren {
   UsersIdRoute: typeof UsersIdRoute
@@ -96,6 +217,9 @@ const UsersRouteWithChildren = UsersRoute._addFileChildren(UsersRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AnalyticsRoute: AnalyticsRoute,
+  OrdersRoute: OrdersRouteWithChildren,
+  SettingsRoute: SettingsRoute,
   UsersRoute: UsersRouteWithChildren,
 }
 export const routeTree = rootRouteImport

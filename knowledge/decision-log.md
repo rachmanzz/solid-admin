@@ -22,6 +22,97 @@ Recorded decisions for **solid-admin**, with their context and rationale. Each
 entry follows the ADR-style format: **Decision**, **Context**, **Consequence**.
 Newest decision is at the top.
 
+## D-012: Sidebar submenus — recursive data model + accordion/flyout
+
+- **Context:** The admin menu was flat (`MenuItem` = label/route/exact/icon).
+  The user asked for submenu support and approved (a) a demo submenu under
+  Orders (All Orders, Pending, Completed — the last two as new placeholder
+  routes) and (b) collapsed-sidebar behavior of "click parent icon → flyout to
+  the right".
+- **Decision:** Extend `MenuItem` with `children?: MenuItem[]` and render the
+  menu recursively from `Sidebar.tsx`. Expanded mode: an item with children
+  becomes an accordion parent (`<button>` toggle with a rotating chevron);
+  expanded mode auto-opens the group that contains the active route (derived
+  from `location().pathname` prefix match) so navigating to a child keeps the
+  parent open. Collapsed mode (64px): the parent icon toggles an absolutely
+  positioned flyout panel (`left-full`, `w-48`, `flex! flex-col!`) to the right
+  with the child links, plus a `fixed inset-0` click-catcher overlay.
+- **Consequence:** New child routes need a placeholder page file under
+  `src/routes/` (file-based routing regenerates `routeTree.gen.ts` on build).
+  Two implementation traps were fixed during this work: (1) spreading parent
+  `{...props}` (which carried `item`) over the explicit child `item={item}`
+  made every child render the parent — child props are now rebuilt by
+  `subMenuProps()`; (2) daisyUI `.menu` forces `display:grid` (flow column) on
+  any direct child of `li`, so the flyout must use `flex! flex-col!` to stack
+  vertically. State is a local `openKeys` signal plus derived auto-open;
+  `flyoutKey` is cleared when the collapse state changes.
+
+## D-010: Solid 2 context API — use context directly as provider
+
+- **Context:** The admin layout's `LayoutProvider` used
+  `<LayoutContext.Provider value={...}>`. In Solid 2, `createContext()` returns
+  the provider function directly (not an object with a `.Provider` property), so
+  `LayoutContext.Provider` is `undefined` → `createComponent(undefined)` →
+  "Comp is not a function" on every route. This only surfaced in production
+  builds; jsdom tests passed because they ran unminified source without the
+  full createComponent path.
+- **Decision:** Use the context directly as a provider:
+  `<LayoutContext value={...}>`. This matches the Solid 2 pattern used by
+  `@tanstack/solid-router` itself (`createComponent(RouterContext, { value })`).
+- **Consequence:** All routes render cleanly in production builds. Verified by
+  headless Chrome capture on 6 routes with no errors. The root cause was
+  confirmed by rebuilding with `--minify false` (revealed `Comp is not a
+  function`) and tracing the compiled `createComponent` calls.
+
+## D-011: Visual polish — shadow depth, active state tint, search background
+
+- **Context:** The admin layout had flat borders on sidebar/navbar and a solid
+  primary-color active menu state. The goal is a more polished, professional
+  admin panel look without changing component structure or logic.
+- **Decision:** Pure CSS/Tailwind class edits (no structural changes):
+  - Sidebar: `border-r` → `shadow-sm` for depth.
+  - Navbar: `border-b` → `shadow-sm` for depth.
+  - Active menu: `bg-primary text-primary-content` → `bg-primary/10 text-primary`
+    (softer tint instead of solid block).
+  - Search input: `bg-base-200` added for subtle background.
+  - Cards: `shadow` → `shadow-sm` for lighter depth.
+  - Stat cards: `shadow` → `shadow-sm` to match cards.
+  - Dropdown: `shadow-lg` added for prominent depth.
+  - Brand logo: `shadow-sm` added for subtle depth.
+- **Consequence:** The admin panel has a more polished, professional appearance
+  with consistent depth treatment (shadow-sm on surfaces, shadow-lg on overlays).
+  Active menu state is softer and less distracting. No component logic or
+  structure was changed.
+
+- **Context:** The admin shell used a fixed daisyUI drawer that only collapsed
+  on mobile; the sidebar was text-only (no icons), had no top brand area, and
+  the navbar was hardcoded demo content. The goal is a *reusable* admin layout
+  (sidebar/navbar/content) that any page composes, matching standard admin
+  panels (icons, collapsible sidebar, persistent navbar).
+- **Decision:** Rebuild `src/components/layout/` around shared state and
+  configuration:
+  - `layout-context.tsx` — `LayoutProvider`/`useLayout()` exposing `collapsed`
+    (desktop icon-only toggle) and `mobileOpen` (off-canvas drawer).
+  - `menu.tsx` — a single `menuItems` config (label + route + icon) plus an
+    inline SVG icon set; the sidebar and any menu UI render from it so nav stays
+    in one place.
+  - `Sidebar.tsx` — top brand block, icon menu, `w-72`/`w-16` icon-only collapse
+    driven by the context; an optional `forceFull` prop keeps the mobile drawer
+    full-width.
+  - `Navbar.tsx` — mobile drawer toggle + desktop collapse toggle, responsive
+    search, notifications, and a user dropdown.
+  - `AppShell.tsx` — desktop sidebar in-flow (collapsible) plus a mobile
+    slide-over drawer with overlay; wraps children in `LayoutProvider`.
+  - Removed the `sidebar` prop from `AppShell` (it renders its own sidebar).
+  - Added placeholder routes `orders`, `analytics`, `settings` (reusing
+    `PageHeader` + `Card`) so the menu has real destinations.
+- **Consequence:** The layout is reusable per page (long-term goal) and matches
+  standard admin panels. The static build contract and existing routing/styling
+  are preserved. A transient `createComponent` HMR error appeared during the
+  multi-file creation window but resolved once files were complete — the final,
+  consistent tree renders cleanly (verified by `vite build` SSR prerender and
+  route-render tests).
+
 ## D-008: Runtime theme activation via `src/lib/theme.ts`
 
 - **Context:** The custom daisyUI themes (`admin`/`admin-dark`) existed in

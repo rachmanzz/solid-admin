@@ -1,9 +1,10 @@
 import { For } from 'solid-js';
+import type { JSX } from '@solidjs/web';
 
 // Generic data table: renders headers and rows for any row shape (T). Each
 // column maps the row to a JSX cell. Handles the empty state gracefully.
 export default function DataTable<T extends object>(props: {
-  columns: { key: string; header: string; cell: (row: T) => unknown }[];
+  columns: { key: string; header: string; cell: (row: T) => JSX.Element }[];
   rows: T[];
   rowKey: (row: T) => string | number;
 }) {

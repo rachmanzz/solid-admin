@@ -1,4 +1,4 @@
-import type { JSX } from 'solid-js';
+import type { JSX } from '@solidjs/web';
 
 // Standard page header: title, optional description, and an optional action
 // (button), laid out responsively (stack on mobile, row on desktop).
