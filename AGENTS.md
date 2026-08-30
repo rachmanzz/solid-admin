@@ -25,6 +25,19 @@ repository. Read this file before executing any command.
   identified during an audit require explicit user approval and a separate
   change request.
 
+## Language — English Only
+
+- **Naming must be English.** All file names (`StatCard.tsx`), component names,
+  function names, variable names, and comments/strings in code MUST be written
+  in English. This includes identifiers, doc comments, and inline comments.
+- **Written artifacts must be English.** Any update to docs, skills, agents,
+  README, knowledge base, or other written material MUST be in English.
+- **No other language allowed**, unless a feature is highly specific and has no
+  adequate English counterpart for the naming (e.g. a domain term that only
+  exists in another language). When in doubt, use English.
+- **Converse accordingly.** User/agent conversation should also be in English
+  unless the user writes otherwise.
+
 This is a SolidJS 2.x project. Solid is not React: components run once (there is no re-render), reactivity is fine-grained through signals, and effects/memos have Solid-specific semantics. Do not port React patterns.
 
 ## Knowledge base (`knowledge/`)
