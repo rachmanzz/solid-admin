@@ -48,6 +48,12 @@ consult it and keep it coherent:
   propose a `decision-log.md` entry (subject to user approval per the rules
   above) rather than leaving rationale implicit.
 
+## Project skills (in `.opencode/skills/` — read on demand)
+
+The project ships agent skills that encode engineering conventions for this codebase:
+
+- `.opencode/skills/general/SKILL.md` — core engineering principles (SRP, KISS, DRY, YAGNI, composition, separation of concerns, error handling, testing). Read this before creating, reviewing, or refactoring any non-trivial code. It defines *when* to split, *when* to extract, and the concrete patterns expected in this project.
+
 ## Versioned skills (in node_modules — read on demand)
 
 The installed packages ship agent skills that match their exact installed versions:

@@ -37,14 +37,17 @@ dashboard templates built on SolidJS 2.x.
 - Static-only build (`vite build` → `dist/client`); no server runtime.
 - Documentation started: `docs/project-structures.md`, `docs/basic.md`,
   `README.md`, and a `knowledge/` base.
+- Admin starter design: daisyUI drawer shell, dashboard, and users page.
+- Component library: `src/components/layout/*` (shell, navbar, sidebar, page
+  header) and `src/components/ui/*` (card, stat card, data table, empty state).
 
 ## Short-term goals
 
-- [ ] Populate `knowledge/plan.md`, `knowledge/changelog.md`, and
+- [x] Populate `knowledge/plan.md`, `knowledge/changelog.md`, and
       `knowledge/decision-log.md` (this file set).
-- [ ] Build out real admin screens (dashboard, users table, forms) using daisyUI
+- [x] Build out real admin screens (dashboard, users table, forms) using daisyUI
       components instead of plain custom classes.
-- [ ] Ensure all components co-locate a Vitest test.
+- [x] Ensure all components co-locate a Vitest test.
 - [ ] Turn the `docs/` + `knowledge/` into a graphify knowledge graph.
 
 ## Medium-term goals

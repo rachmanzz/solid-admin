@@ -24,6 +24,11 @@ chronological order (newest at the top).
 ## [Unreleased]
 
 ### Added
+- Component library under `src/components/`: `layout/` (AppShell, Navbar,
+  Sidebar, PageHeader) and `ui/` (Card, StatCard, DataTable, EmptyState).
+- Route files refactored to compose the new components; co-located tests for
+  `StatCard` and `DataTable`.
+- `.opencode/skills/general/SKILL.md` — added a Component Organization section.
 - `docs/project-structures.md` — file-by-file reference of the project layout.
 - `docs/basic.md` — practical getting-started guide (stack, styling, routing,
   components, deployment).

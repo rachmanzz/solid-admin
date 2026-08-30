@@ -1,67 +1,69 @@
-import { For } from 'solid-js';
+import { Show } from 'solid-js';
 import { Link, createFileRoute } from '@tanstack/solid-router';
 
-const users = [
+import PageHeader from '../components/layout/PageHeader';
+import Card from '../components/ui/Card';
+import DataTable from '../components/ui/DataTable';
+import EmptyState from '../components/ui/EmptyState';
+
+type User = {
+  id: string;
+  name: string;
+  title: string;
+  role: 'admin' | 'editor' | 'viewer';
+};
+
+const users: User[] = [
   { id: '1', name: 'Ava Thompson', title: 'Administrator', role: 'admin' },
   { id: '2', name: 'Liam Chen', title: 'Editor', role: 'editor' },
   { id: '3', name: 'Noah Patel', title: 'Viewer', role: 'viewer' },
   { id: '4', name: 'Mia Garcia', title: 'Editor', role: 'editor' },
 ];
 
+const userColumns = [
+  { key: 'name', header: 'Name', cell: (u: User) => <span class="font-medium">{u.name}</span> },
+  { key: 'title', header: 'Title', cell: (u: User) => u.title },
+  {
+    key: 'role',
+    header: 'Role',
+    cell: (u: User) => (
+      <span
+        class={{
+          badge: true,
+          'badge-primary': u.role === 'admin',
+          'badge-secondary': u.role === 'editor',
+          'badge-ghost': u.role === 'viewer',
+        }}
+      >
+        {u.role}
+      </span>
+    ),
+  },
+  {
+    key: 'actions',
+    header: '',
+    cell: (u: User) => (
+      <Link to="/users/$id" params={{ id: u.id }} class="btn btn-sm btn-ghost">
+        View
+      </Link>
+    ),
+  },
+];
+
 function UsersPage() {
   return (
     <section class="space-y-6">
-      <header class="flex items-center justify-between">
-        <div>
-          <h1 class="text-2xl font-bold">Users</h1>
-          <p class="text-base-content/60">Manage accounts and roles.</p>
-        </div>
-        <button class="btn btn-primary">Add user</button>
-      </header>
+      <PageHeader
+        title="Users"
+        description="Manage accounts and roles."
+        action={<button class="btn btn-primary">Add user</button>}
+      />
 
-      <div class="card bg-base-100 shadow">
-        <div class="card-body">
-          <div class="overflow-x-auto">
-            <table class="table table-zebra">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Title</th>
-                  <th>Role</th>
-                  <th />
-                </tr>
-              </thead>
-              <tbody>
-                <For each={users}>
-                  {(u) => (
-                    <tr>
-                      <td class="font-medium">{u.name}</td>
-                      <td>{u.title}</td>
-                      <td>
-                        <span
-                          class={{
-                            badge: true,
-                            'badge-primary': u.role === 'admin',
-                            'badge-secondary': u.role === 'editor',
-                            'badge-ghost': u.role === 'viewer',
-                          }}
-                        >
-                          {u.role}
-                        </span>
-                      </td>
-                      <td class="text-right">
-                        <Link to="/users/$id" params={{ id: u.id }} class="btn btn-sm btn-ghost">
-                          View
-                        </Link>
-                      </td>
-                    </tr>
-                  )}
-                </For>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
+      <Card>
+        <Show when={users.length > 0} fallback={<EmptyState message="No users found." />}>
+          <DataTable columns={userColumns} rows={users} rowKey={(u) => u.id} />
+        </Show>
+      </Card>
     </section>
   );
 }
