@@ -12,6 +12,10 @@ import { applyTheme, watchSystemTheme } from './lib/theme';
 
 const router = createRouter({
   routeTree,
+  // Mount the whole router at a sub-path so every route lives under
+  // /panel-admin/*. Incoming paths outside this basepath are rewritten by
+  // the router; the bare root is redirected to the basepath (see onSettled).
+  basepath: '/panel-admin',
   defaultPendingComponent: () => <main>Loading…</main>,
 });
 
@@ -32,6 +36,14 @@ export default function App() {
   onSettled(() => {
     applyTheme();
     watchSystemTheme();
+    // Auto-redirect the bare root to the router basepath so `/` lands on
+    // the app instead of a 404.
+    if (typeof window !== 'undefined') {
+      const path = window.location.pathname;
+      if (path === '/' || path === '') {
+        window.location.replace('/panel-admin');
+      }
+    }
   });
 
   return (

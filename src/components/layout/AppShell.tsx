@@ -14,7 +14,7 @@ function Shell(props: ParentProps) {
   const { mobileOpen, closeMobile } = useLayout();
 
   return (
-    <div class="flex min-h-screen bg-(--background) text-(--foreground)">
+    <div class="flex min-h-screen bg-base-100 text-base-content">
       {/* Desktop sidebar: in-flow, collapsible */}
       <div class="hidden lg:block shrink-0">
         <Sidebar />

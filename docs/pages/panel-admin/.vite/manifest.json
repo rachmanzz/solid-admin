@@ -1,0 +1,137 @@
+{
+  "_Card-BilosHtb.js": {
+    "file": "assets/Card-BilosHtb.js",
+    "name": "Card",
+    "imports": [
+      "_web-DmtpQApP.js"
+    ]
+  },
+  "_link-D0kNEIyb.js": {
+    "file": "assets/link-D0kNEIyb.js",
+    "name": "link",
+    "imports": [
+      "_web-DmtpQApP.js"
+    ]
+  },
+  "_users._id-Bkz50Ap5.js": {
+    "file": "assets/users._id-Bkz50Ap5.js",
+    "name": "users._id",
+    "imports": [
+      "_web-DmtpQApP.js",
+      "_link-D0kNEIyb.js"
+    ],
+    "dynamicImports": [
+      "src/routes/users.$id.tsx?tsr-split=component"
+    ]
+  },
+  "_web-DmtpQApP.js": {
+    "file": "assets/web-DmtpQApP.js",
+    "name": "web"
+  },
+  "src/routes/analytics.tsx?tsr-split=component": {
+    "file": "assets/analytics--zLQVjfb.js",
+    "name": "analytics",
+    "src": "src/routes/analytics.tsx?tsr-split=component",
+    "isDynamicEntry": true,
+    "imports": [
+      "_web-DmtpQApP.js",
+      "_Card-BilosHtb.js"
+    ]
+  },
+  "src/routes/index.tsx?tsr-split=component": {
+    "file": "assets/routes-BqNYwWY-.js",
+    "name": "routes",
+    "src": "src/routes/index.tsx?tsr-split=component",
+    "isDynamicEntry": true,
+    "imports": [
+      "_web-DmtpQApP.js",
+      "_Card-BilosHtb.js"
+    ]
+  },
+  "src/routes/orders.tsx?tsr-split=component": {
+    "file": "assets/orders-C4Ot9ngE.js",
+    "name": "orders",
+    "src": "src/routes/orders.tsx?tsr-split=component",
+    "isDynamicEntry": true,
+    "imports": [
+      "_web-DmtpQApP.js",
+      "_Card-BilosHtb.js"
+    ]
+  },
+  "src/routes/orders/completed.tsx?tsr-split=component": {
+    "file": "assets/completed-BXlU0uBp.js",
+    "name": "completed",
+    "src": "src/routes/orders/completed.tsx?tsr-split=component",
+    "isDynamicEntry": true,
+    "imports": [
+      "_web-DmtpQApP.js",
+      "_Card-BilosHtb.js"
+    ]
+  },
+  "src/routes/orders/pending.tsx?tsr-split=component": {
+    "file": "assets/pending-sOBH0bYl.js",
+    "name": "pending",
+    "src": "src/routes/orders/pending.tsx?tsr-split=component",
+    "isDynamicEntry": true,
+    "imports": [
+      "_web-DmtpQApP.js",
+      "_Card-BilosHtb.js"
+    ]
+  },
+  "src/routes/settings.tsx?tsr-split=component": {
+    "file": "assets/settings-DCUND0Jt.js",
+    "name": "settings",
+    "src": "src/routes/settings.tsx?tsr-split=component",
+    "isDynamicEntry": true,
+    "imports": [
+      "_web-DmtpQApP.js",
+      "_Card-BilosHtb.js"
+    ]
+  },
+  "src/routes/users.$id.tsx?tsr-split=component": {
+    "file": "assets/users._id-6GXlHT3a.js",
+    "name": "users._id",
+    "src": "src/routes/users.$id.tsx?tsr-split=component",
+    "isDynamicEntry": true,
+    "imports": [
+      "_web-DmtpQApP.js",
+      "_users._id-Bkz50Ap5.js",
+      "_link-D0kNEIyb.js",
+      "_Card-BilosHtb.js"
+    ]
+  },
+  "src/routes/users.tsx?tsr-split=component": {
+    "file": "assets/users-CthcqieJ.js",
+    "name": "users",
+    "src": "src/routes/users.tsx?tsr-split=component",
+    "isDynamicEntry": true,
+    "imports": [
+      "_web-DmtpQApP.js",
+      "_link-D0kNEIyb.js",
+      "_Card-BilosHtb.js"
+    ]
+  },
+  "virtual:solid-ssr-entry-client.tsx": {
+    "file": "assets/virtual_solid-ssr-entry-client-DoCs_5Hu.js",
+    "name": "virtual_solid-ssr-entry-client",
+    "src": "virtual:solid-ssr-entry-client.tsx",
+    "isEntry": true,
+    "imports": [
+      "_web-DmtpQApP.js",
+      "_users._id-Bkz50Ap5.js",
+      "_link-D0kNEIyb.js"
+    ],
+    "dynamicImports": [
+      "src/routes/index.tsx?tsr-split=component",
+      "src/routes/analytics.tsx?tsr-split=component",
+      "src/routes/orders.tsx?tsr-split=component",
+      "src/routes/settings.tsx?tsr-split=component",
+      "src/routes/users.tsx?tsr-split=component",
+      "src/routes/orders/completed.tsx?tsr-split=component",
+      "src/routes/orders/pending.tsx?tsr-split=component"
+    ],
+    "css": [
+      "assets/virtual_solid-ssr-entry-client-B3S8CSlL.css"
+    ]
+  }
+}

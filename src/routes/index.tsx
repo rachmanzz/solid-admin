@@ -1,52 +1,32 @@
 import { For } from 'solid-js';
 import { createFileRoute } from '@tanstack/solid-router';
 
-import Counter from '../components/Counter';
 import PageHeader from '../components/layout/PageHeader';
 import Card from '../components/ui/Card';
-import DataTable from '../components/ui/DataTable';
 import StatCard from '../components/ui/StatCard';
+import LineChart from '../components/ui/LineChart';
 
 type Activity = {
   id: number;
   user: string;
   action: string;
+  time: string;
   status: 'done' | 'pending';
 };
 
 const stats = [
-  { label: 'Users', value: '1,248', trend: '+12%' },
-  { label: 'Revenue', value: '$32.4k', trend: '+4.2%' },
-  { label: 'Orders', value: '386', trend: '-2%' },
-  { label: 'Active now', value: '57', trend: '+9%' },
+  { label: 'Sales', value: '2,847', trend: '+18%' },
+  { label: 'Revenue', value: '$48.6k', trend: '+12.5%' },
+  { label: 'Subscription', value: '1,423', trend: '+7%' },
+  { label: 'Users', value: '5,892', trend: '+24%' },
 ];
 
 const recent: Activity[] = [
-  { id: 1, user: 'Ava Thompson', action: 'Created account', status: 'done' },
-  { id: 2, user: 'Liam Chen', action: 'Upgraded plan', status: 'done' },
-  { id: 3, user: 'Noah Patel', action: 'Flagged content', status: 'pending' },
-  { id: 4, user: 'Mia Garcia', action: 'Deleted project', status: 'done' },
-];
-
-const activityColumns = [
-  { key: 'id', header: '#', cell: (r: Activity) => r.id },
-  { key: 'user', header: 'User', cell: (r: Activity) => r.user },
-  { key: 'action', header: 'Action', cell: (r: Activity) => r.action },
-  {
-    key: 'status',
-    header: 'Status',
-    cell: (r: Activity) => (
-      <span
-        class={{
-          badge: true,
-          'badge-success': r.status === 'done',
-          'badge-warning': r.status === 'pending',
-        }}
-      >
-        {r.status}
-      </span>
-    ),
-  },
+  { id: 1, user: 'Ava Thompson', action: 'Created account', time: '2 min ago', status: 'done' },
+  { id: 2, user: 'Liam Chen', action: 'Upgraded plan', time: '18 min ago', status: 'done' },
+  { id: 3, user: 'Noah Patel', action: 'Flagged content', time: '1 hr ago', status: 'pending' },
+  { id: 4, user: 'Mia Garcia', action: 'Deleted project', time: '3 hr ago', status: 'done' },
+  { id: 5, user: 'Ethan Kim', action: 'Refunded order', time: '5 hr ago', status: 'done' },
 ];
 
 function Home() {
@@ -58,22 +38,45 @@ function Home() {
         action={<button class="btn btn-primary">New report</button>}
       />
 
-      <div class="stats stats-vertical sm:stats-horizontal shadow-sm w-full bg-base-100">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         <For each={stats}>
-          {(s) => <StatCard label={s.label} value={s.value} trend={s.trend} />}
+          {(s) => (
+            <Card>
+              <StatCard label={s.label} value={s.value} trend={s.trend} />
+            </Card>
+          )}
         </For>
       </div>
 
-      <Card title="Recent activity">
-        <DataTable columns={activityColumns} rows={recent} rowKey={(r) => r.id} />
-      </Card>
+      <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
+        <Card title="Overview" class="w-full sm:col-span-1 xl:col-span-2">
+          <LineChart />
+        </Card>
 
-      <Card title="Interactive demo">
-        <p class="text-base-content/60">A live Solid signal, styled with daisyUI.</p>
-        <div class="card-actions">
-          <Counter />
-        </div>
-      </Card>
+        <Card title="Recent activity" class="w-full">
+          <ul class="list">
+            <For each={recent}>
+              {(item) => (
+                <li class="list-row">
+                  <div class="avatar avatar-placeholder">
+                    <div class="bg-primary text-primary-content w-10 rounded-full">
+                      <span class="text-xs">{item.user.charAt(0)}</span>
+                    </div>
+                  </div>
+                  <div class="list-col-grow">
+                    <div class="font-medium">{item.user}</div>
+                    <div class="text-xs text-base-content/50">{item.action}</div>
+                  </div>
+                  <div class="flex flex-col items-end gap-1">
+                    <div class="badge badge-soft badge-primary px-3 py-1.5">{item.status}</div>
+                    <span class="text-xs text-base-content/40">{item.time}</span>
+                  </div>
+                </li>
+              )}
+            </For>
+          </ul>
+        </Card>
+      </div>
     </section>
   );
 }

@@ -30,14 +30,14 @@ function useFocusableItems(container: () => HTMLElement | undefined) {
 // Brand/logo block at the top of the sidebar. Collapses to an icon only.
 function Brand(props: { collapsed: boolean }) {
   const logo = (
-    <span class="flex items-center justify-center w-10 h-10 rounded-xl bg-primary text-primary-content font-bold text-sm shadow-md">
+    <span class="flex items-center justify-center w-10 h-10 rounded-box bg-primary text-primary-content font-bold text-sm shadow-md">
       SA
     </span>
   );
   return (
     <div
       class={[
-        'flex items-center h-16 border-b border-(--border)',
+        'flex items-center h-16 border-b border-base-300',
         props.collapsed ? 'justify-center px-2' : 'gap-3 px-4',
       ]}
     >
@@ -103,10 +103,10 @@ function LeafItem(props: MenuListProps & { item: MenuItem }) {
         activeProps={{ class: 'bg-primary/15 text-primary font-semibold' }}
         class={
           props.collapsed && isTop()
-            ? 'transition-colors flex! items-center! justify-center! w-11! h-11! p-0! rounded-xl'
+            ? 'transition-colors flex! items-center! justify-center! w-11! h-11! p-0! rounded-box'
             : props.depth > 0
-              ? 'transition-colors rounded-lg text-sm hover:bg-base-300'
-              : 'transition-colors rounded-lg hover:bg-base-300'
+              ? 'transition-colors rounded-field text-sm hover:bg-base-300'
+              : 'transition-colors rounded-field hover:bg-base-300'
         }
         title={props.collapsed && isTop() ? props.item.label : undefined}
       >
@@ -166,8 +166,8 @@ function ParentItem(props: MenuListProps & { item: MenuItem }) {
         class={[
           'transition-colors',
           props.collapsed
-            ? 'flex! items-center! justify-center! w-11! h-11! p-0! rounded-xl'
-            : 'flex w-full items-center gap-3 rounded-lg px-3 py-2 hover:bg-base-300',
+            ? 'flex! items-center! justify-center! w-11! h-11! p-0! rounded-box'
+            : 'flex w-full items-center gap-3 rounded-field px-3 py-2 hover:bg-base-300',
           { 'bg-primary/15 text-primary': active() && props.collapsed },
           { 'bg-primary/10 text-primary font-semibold': active() && !props.collapsed },
         ]}
@@ -190,9 +190,9 @@ function ParentItem(props: MenuListProps & { item: MenuItem }) {
           ref={flyoutRef}
           role="menu"
           onKeyDown={handleFlyoutKey}
-          class="absolute left-full top-0 z-50 ml-2 w-48 flex! flex-col! rounded-xl border border-(--border) bg-base-100 p-2 shadow-lg"
+          class="absolute left-full top-0 z-50 ml-2 w-48 flex! flex-col! rounded-box border border-base-300 bg-base-100 p-2 shadow-lg"
         >
-          <span class="mb-1 block px-3 pt-1 text-xs font-semibold uppercase tracking-wider text-(--muted-foreground)">
+          <span class="mb-1 block px-3 pt-1 text-xs font-semibold uppercase tracking-wider text-base-content/60">
             {props.item.label}
           </span>
           <For each={props.item.children!}>
@@ -206,7 +206,7 @@ function ParentItem(props: MenuListProps & { item: MenuItem }) {
                   props.setFlyoutKey(null);
                 }}
                 activeProps={{ class: 'bg-primary/15 text-primary font-semibold' }}
-                class="flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors hover:bg-base-300"
+                class="flex items-center gap-3 rounded-field px-3 py-2 text-sm transition-colors hover:bg-base-300"
               >
                 {child.icon()}
                 <span>{child.label}</span>
@@ -249,7 +249,7 @@ export default function Sidebar(props: { forceFull?: boolean }) {
 
       <nav class={['flex-1 overflow-y-auto', collapsedNow() ? 'py-2' : 'px-3 pb-4']}>
         <ul class={['menu text-base-content', collapsedNow() ? 'w-full flex flex-col items-center gap-1 p-0' : 'gap-1 w-full']}>
-          {!collapsedNow() ? <li class="menu-title text-xs font-semibold uppercase tracking-wider text-(--muted-foreground)">Main</li> : null}
+          {!collapsedNow() ? <li class="menu-title text-xs font-semibold uppercase tracking-wider text-base-content/60">Main</li> : null}
           <MenuList
             items={menuItems}
             collapsed={collapsedNow()}
@@ -265,8 +265,8 @@ export default function Sidebar(props: { forceFull?: boolean }) {
       </nav>
 
       {!collapsedNow() ? (
-        <div class="border-t border-(--border) px-4 py-3">
-          <p class="text-xs font-medium text-(--muted-foreground)">v1.0 · Admin template</p>
+        <div class="border-t border-base-300 px-4 py-3">
+          <p class="text-xs font-medium text-base-content/60">v1.0 · Admin template</p>
         </div>
       ) : null}
     </aside>

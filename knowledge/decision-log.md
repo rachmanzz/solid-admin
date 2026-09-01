@@ -22,6 +22,23 @@ Recorded decisions for **solid-admin**, with their context and rationale. Each
 entry follows the ADR-style format: **Decision**, **Context**, **Consequence**.
 Newest decision is at the top.
 
+## D-014: Dashboard chart — Chart.js mounted directly, not a Solid wrapper
+
+- **Decision:** Use Chart.js directly (framework-agnostic, browser-only) mounted
+  on a `<canvas>` ref inside a small Solid 2 component (`LineChart`), instead of
+  a SolidJS-specific chart wrapper such as `solid-chartjs` or `solid-apexcharts`.
+- **Context:** The dashboard Overview card needed a chart. daisyUI ships no chart
+  component. The obvious SolidJS wrappers (`solid-chartjs`, `solid-apexcharts`)
+  were built for Solid 1.x and import from `solid-js/web`, a subpath export that
+  no longer exists in Solid 2 — the production build failed with
+  `"./web" is not exported ... from solid-js`. Chart.js itself is
+  framework-agnostic and imports no Solid internals, so mounting it directly on a
+  canvas works on Solid 2 without a wrapper.
+- **Consequence:** No Solid-wrapper dependency. Chart is initialised only in
+  `onSettled` (browser-only) and destroyed in `onCleanup`, so it is safe under
+  SSR/prerender (Chart.js code is not executed on the server side). Future
+  chart types reuse the same pattern by changing the `type` and data.
+
 ## D-013: Accessibility — inert/aria-hidden on closed drawer, flyout ARIA
 
 - **Context:** The mobile drawer in `AppShell.tsx` was always in the DOM and
@@ -101,6 +118,8 @@ Newest decision is at the top.
   with consistent depth treatment (shadow-sm on surfaces, shadow-lg on overlays).
   Active menu state is softer and less distracting. No component logic or
   structure was changed.
+
+## D-009: Reusable admin layout — icon sidebar, collapsible state, centralized menu
 
 - **Context:** The admin shell used a fixed daisyUI drawer that only collapsed
   on mobile; the sidebar was text-only (no icons), had no top brand area, and

@@ -24,6 +24,16 @@ chronological order (newest at the top).
 ## [Unreleased]
 
 ### Added
+- `LineChart` component (`src/components/ui/LineChart.tsx`) rendering a line
+  chart in the dashboard Overview card via Chart.js mounted directly on a
+  `<canvas>` ref (Solid 2 `onSettled`/`onCleanup`).
+- `chart.js` dependency (framework-agnostic; no Solid wrapper package).
+
+### Changed
+- Dashboard Overview card now displays a revenue/sales line chart instead of
+  placeholder text.
+
+### Added
 - Profiles API module (`src/lib/api/profiles.ts`) with `fetchUserProfile(id)`
   and `useUserProfile` hook for user profile data via TanStack Query.
 - Accessibility improvements: mobile drawer now has `inert` and `aria-hidden`
