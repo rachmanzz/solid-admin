@@ -46,18 +46,18 @@ export type MenuItem = {
 // with `children` renders as a collapsible submenu (the parent itself is the
 // expand toggle; add a child pointing at the parent's route for an index link).
 export const menuItems: MenuItem[] = [
-  { label: 'Dashboard', route: '/', exact: true, icon: icons.dashboard },
-  { label: 'Users', route: '/users', icon: icons.users },
+  { label: 'Dashboard', route: '/panel-admin', exact: true, icon: icons.dashboard },
+  { label: 'Users', route: '/panel-admin/users', icon: icons.users },
   {
     label: 'Orders',
-    route: '/orders',
+    route: '/panel-admin/orders',
     icon: icons.orders,
     children: [
-      { label: 'All Orders', route: '/orders', exact: true, icon: icons.orders },
-      { label: 'Pending', route: '/orders/pending', icon: icons.clock },
-      { label: 'Completed', route: '/orders/completed', icon: icons.check },
+      { label: 'All Orders', route: '/panel-admin/orders', exact: true, icon: icons.orders },
+      { label: 'Pending', route: '/panel-admin/orders/pending', icon: icons.clock },
+      { label: 'Completed', route: '/panel-admin/orders/completed', icon: icons.check },
     ],
   },
-  { label: 'Analytics', route: '/analytics', icon: icons.analytics },
-  { label: 'Settings', route: '/settings', icon: icons.settings },
+  { label: 'Analytics', route: '/panel-admin/analytics', icon: icons.analytics },
+  { label: 'Settings', route: '/panel-admin/settings', icon: icons.settings },
 ];

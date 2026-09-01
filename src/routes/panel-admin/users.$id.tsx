@@ -1,8 +1,8 @@
 import { Link, createFileRoute } from '@tanstack/solid-router';
 import { Show } from 'solid-js';
-import { useUserProfile } from '../hooks/useUserProfile';
-import PageHeader from '../components/layout/PageHeader';
-import Card from '../components/ui/Card';
+import { useUserProfile } from '../../hooks/useUserProfile';
+import PageHeader from '../../components/layout/PageHeader';
+import Card from '../../components/ui/Card';
 
 function UserPage() {
   const params = Route.useParams();
@@ -18,7 +18,7 @@ function UserPage() {
             <p class="text-base-content/60">{data().title}</p>
             <div class="card-actions justify-end mt-4">
               <Link
-                to="/users/$id"
+                to="/panel-admin/users/$id"
                 params={(prev) => ({ id: String(Number(prev.id) + 1) })}
                 class="btn btn-primary btn-sm"
               >
@@ -32,7 +32,7 @@ function UserPage() {
   );
 }
 
-export const Route = createFileRoute('/users/$id')({
+export const Route = createFileRoute('/panel-admin/users/$id')({
   head: ({ params }) => ({
     meta: [{ title: `User ${params.id} - Solid App` }],
   }),

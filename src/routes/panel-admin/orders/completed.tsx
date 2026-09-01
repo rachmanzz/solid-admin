@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/solid-router';
 
-import PageHeader from '../../components/layout/PageHeader';
-import Card from '../../components/ui/Card';
+import PageHeader from '../../../components/layout/PageHeader';
+import Card from '../../../components/ui/Card';
 
 function CompletedOrders() {
   return (
@@ -16,7 +16,7 @@ function CompletedOrders() {
   );
 }
 
-export const Route = createFileRoute('/orders/completed')({
+export const Route = createFileRoute('/panel-admin/orders/completed')({
   head: () => ({ meta: [{ title: 'Completed Orders - solid-admin' }] }),
   component: CompletedOrders,
 });

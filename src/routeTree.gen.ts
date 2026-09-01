@@ -10,125 +10,145 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as AnalyticsRouteImport } from './routes/analytics'
-import { Route as OrdersRouteImport } from './routes/orders'
-import { Route as SettingsRouteImport } from './routes/settings'
-import { Route as UsersRouteImport } from './routes/users'
-import { Route as OrdersCompletedRouteImport } from './routes/orders/completed'
-import { Route as OrdersPendingRouteImport } from './routes/orders/pending'
-import { Route as UsersIdRouteImport } from './routes/users.$id'
+import { Route as PanelAdminRouteImport } from './routes/panel-admin'
+import { Route as PanelAdminIndexRouteImport } from './routes/panel-admin/index'
+import { Route as PanelAdminAnalyticsRouteImport } from './routes/panel-admin/analytics'
+import { Route as PanelAdminOrdersRouteImport } from './routes/panel-admin/orders'
+import { Route as PanelAdminSettingsRouteImport } from './routes/panel-admin/settings'
+import { Route as PanelAdminUsersRouteImport } from './routes/panel-admin/users'
+import { Route as PanelAdminOrdersCompletedRouteImport } from './routes/panel-admin/orders/completed'
+import { Route as PanelAdminOrdersPendingRouteImport } from './routes/panel-admin/orders/pending'
+import { Route as PanelAdminUsersIdRouteImport } from './routes/panel-admin/users.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AnalyticsRoute = AnalyticsRouteImport.update({
+const PanelAdminRoute = PanelAdminRouteImport.update({
+  id: '/panel-admin',
+  path: '/panel-admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PanelAdminIndexRoute = PanelAdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => PanelAdminRoute,
+} as any)
+const PanelAdminAnalyticsRoute = PanelAdminAnalyticsRouteImport.update({
   id: '/analytics',
   path: '/analytics',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => PanelAdminRoute,
 } as any)
-const OrdersRoute = OrdersRouteImport.update({
+const PanelAdminOrdersRoute = PanelAdminOrdersRouteImport.update({
   id: '/orders',
   path: '/orders',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => PanelAdminRoute,
 } as any)
-const SettingsRoute = SettingsRouteImport.update({
+const PanelAdminSettingsRoute = PanelAdminSettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => PanelAdminRoute,
 } as any)
-const UsersRoute = UsersRouteImport.update({
+const PanelAdminUsersRoute = PanelAdminUsersRouteImport.update({
   id: '/users',
   path: '/users',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => PanelAdminRoute,
 } as any)
-const OrdersCompletedRoute = OrdersCompletedRouteImport.update({
-  id: '/completed',
-  path: '/completed',
-  getParentRoute: () => OrdersRoute,
-} as any)
-const OrdersPendingRoute = OrdersPendingRouteImport.update({
+const PanelAdminOrdersCompletedRoute =
+  PanelAdminOrdersCompletedRouteImport.update({
+    id: '/completed',
+    path: '/completed',
+    getParentRoute: () => PanelAdminOrdersRoute,
+  } as any)
+const PanelAdminOrdersPendingRoute = PanelAdminOrdersPendingRouteImport.update({
   id: '/pending',
   path: '/pending',
-  getParentRoute: () => OrdersRoute,
+  getParentRoute: () => PanelAdminOrdersRoute,
 } as any)
-const UsersIdRoute = UsersIdRouteImport.update({
+const PanelAdminUsersIdRoute = PanelAdminUsersIdRouteImport.update({
   id: '/$id',
   path: '/$id',
-  getParentRoute: () => UsersRoute,
+  getParentRoute: () => PanelAdminUsersRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/analytics': typeof AnalyticsRoute
-  '/orders': typeof OrdersRouteWithChildren
-  '/settings': typeof SettingsRoute
-  '/users': typeof UsersRouteWithChildren
-  '/orders/completed': typeof OrdersCompletedRoute
-  '/orders/pending': typeof OrdersPendingRoute
-  '/users/$id': typeof UsersIdRoute
+  '/panel-admin': typeof PanelAdminRouteWithChildren
+  '/panel-admin/analytics': typeof PanelAdminAnalyticsRoute
+  '/panel-admin/orders': typeof PanelAdminOrdersRouteWithChildren
+  '/panel-admin/settings': typeof PanelAdminSettingsRoute
+  '/panel-admin/users': typeof PanelAdminUsersRouteWithChildren
+  '/panel-admin/': typeof PanelAdminIndexRoute
+  '/panel-admin/orders/completed': typeof PanelAdminOrdersCompletedRoute
+  '/panel-admin/orders/pending': typeof PanelAdminOrdersPendingRoute
+  '/panel-admin/users/$id': typeof PanelAdminUsersIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/analytics': typeof AnalyticsRoute
-  '/orders': typeof OrdersRouteWithChildren
-  '/settings': typeof SettingsRoute
-  '/users': typeof UsersRouteWithChildren
-  '/orders/completed': typeof OrdersCompletedRoute
-  '/orders/pending': typeof OrdersPendingRoute
-  '/users/$id': typeof UsersIdRoute
+  '/panel-admin/analytics': typeof PanelAdminAnalyticsRoute
+  '/panel-admin/orders': typeof PanelAdminOrdersRouteWithChildren
+  '/panel-admin/settings': typeof PanelAdminSettingsRoute
+  '/panel-admin/users': typeof PanelAdminUsersRouteWithChildren
+  '/panel-admin': typeof PanelAdminIndexRoute
+  '/panel-admin/orders/completed': typeof PanelAdminOrdersCompletedRoute
+  '/panel-admin/orders/pending': typeof PanelAdminOrdersPendingRoute
+  '/panel-admin/users/$id': typeof PanelAdminUsersIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/analytics': typeof AnalyticsRoute
-  '/orders': typeof OrdersRouteWithChildren
-  '/settings': typeof SettingsRoute
-  '/users': typeof UsersRouteWithChildren
-  '/orders/completed': typeof OrdersCompletedRoute
-  '/orders/pending': typeof OrdersPendingRoute
-  '/users/$id': typeof UsersIdRoute
+  '/panel-admin': typeof PanelAdminRouteWithChildren
+  '/panel-admin/analytics': typeof PanelAdminAnalyticsRoute
+  '/panel-admin/orders': typeof PanelAdminOrdersRouteWithChildren
+  '/panel-admin/settings': typeof PanelAdminSettingsRoute
+  '/panel-admin/users': typeof PanelAdminUsersRouteWithChildren
+  '/panel-admin/': typeof PanelAdminIndexRoute
+  '/panel-admin/orders/completed': typeof PanelAdminOrdersCompletedRoute
+  '/panel-admin/orders/pending': typeof PanelAdminOrdersPendingRoute
+  '/panel-admin/users/$id': typeof PanelAdminUsersIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/analytics'
-    | '/orders'
-    | '/settings'
-    | '/users'
-    | '/orders/completed'
-    | '/orders/pending'
-    | '/users/$id'
+    | '/panel-admin'
+    | '/panel-admin/analytics'
+    | '/panel-admin/orders'
+    | '/panel-admin/settings'
+    | '/panel-admin/users'
+    | '/panel-admin/'
+    | '/panel-admin/orders/completed'
+    | '/panel-admin/orders/pending'
+    | '/panel-admin/users/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/analytics'
-    | '/orders'
-    | '/settings'
-    | '/users'
-    | '/orders/completed'
-    | '/orders/pending'
-    | '/users/$id'
+    | '/panel-admin/analytics'
+    | '/panel-admin/orders'
+    | '/panel-admin/settings'
+    | '/panel-admin/users'
+    | '/panel-admin'
+    | '/panel-admin/orders/completed'
+    | '/panel-admin/orders/pending'
+    | '/panel-admin/users/$id'
   id:
     | '__root__'
     | '/'
-    | '/analytics'
-    | '/orders'
-    | '/settings'
-    | '/users'
-    | '/orders/completed'
-    | '/orders/pending'
-    | '/users/$id'
+    | '/panel-admin'
+    | '/panel-admin/analytics'
+    | '/panel-admin/orders'
+    | '/panel-admin/settings'
+    | '/panel-admin/users'
+    | '/panel-admin/'
+    | '/panel-admin/orders/completed'
+    | '/panel-admin/orders/pending'
+    | '/panel-admin/users/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AnalyticsRoute: typeof AnalyticsRoute
-  OrdersRoute: typeof OrdersRouteWithChildren
-  SettingsRoute: typeof SettingsRoute
-  UsersRoute: typeof UsersRouteWithChildren
+  PanelAdminRoute: typeof PanelAdminRouteWithChildren
 }
 
 declare module '@tanstack/solid-router' {
@@ -140,87 +160,120 @@ declare module '@tanstack/solid-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/analytics': {
-      id: '/analytics'
+    '/panel-admin': {
+      id: '/panel-admin'
+      path: '/panel-admin'
+      fullPath: '/panel-admin'
+      preLoaderRoute: typeof PanelAdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/panel-admin/': {
+      id: '/panel-admin/'
+      path: '/'
+      fullPath: '/panel-admin/'
+      preLoaderRoute: typeof PanelAdminIndexRouteImport
+      parentRoute: typeof PanelAdminRoute
+    }
+    '/panel-admin/analytics': {
+      id: '/panel-admin/analytics'
       path: '/analytics'
-      fullPath: '/analytics'
-      preLoaderRoute: typeof AnalyticsRouteImport
-      parentRoute: typeof rootRouteImport
+      fullPath: '/panel-admin/analytics'
+      preLoaderRoute: typeof PanelAdminAnalyticsRouteImport
+      parentRoute: typeof PanelAdminRoute
     }
-    '/orders': {
-      id: '/orders'
+    '/panel-admin/orders': {
+      id: '/panel-admin/orders'
       path: '/orders'
-      fullPath: '/orders'
-      preLoaderRoute: typeof OrdersRouteImport
-      parentRoute: typeof rootRouteImport
+      fullPath: '/panel-admin/orders'
+      preLoaderRoute: typeof PanelAdminOrdersRouteImport
+      parentRoute: typeof PanelAdminRoute
     }
-    '/settings': {
-      id: '/settings'
+    '/panel-admin/settings': {
+      id: '/panel-admin/settings'
       path: '/settings'
-      fullPath: '/settings'
-      preLoaderRoute: typeof SettingsRouteImport
-      parentRoute: typeof rootRouteImport
+      fullPath: '/panel-admin/settings'
+      preLoaderRoute: typeof PanelAdminSettingsRouteImport
+      parentRoute: typeof PanelAdminRoute
     }
-    '/users': {
-      id: '/users'
+    '/panel-admin/users': {
+      id: '/panel-admin/users'
       path: '/users'
-      fullPath: '/users'
-      preLoaderRoute: typeof UsersRouteImport
-      parentRoute: typeof rootRouteImport
+      fullPath: '/panel-admin/users'
+      preLoaderRoute: typeof PanelAdminUsersRouteImport
+      parentRoute: typeof PanelAdminRoute
     }
-    '/orders/completed': {
-      id: '/orders/completed'
+    '/panel-admin/orders/completed': {
+      id: '/panel-admin/orders/completed'
       path: '/completed'
-      fullPath: '/orders/completed'
-      preLoaderRoute: typeof OrdersCompletedRouteImport
-      parentRoute: typeof OrdersRoute
+      fullPath: '/panel-admin/orders/completed'
+      preLoaderRoute: typeof PanelAdminOrdersCompletedRouteImport
+      parentRoute: typeof PanelAdminOrdersRoute
     }
-    '/orders/pending': {
-      id: '/orders/pending'
+    '/panel-admin/orders/pending': {
+      id: '/panel-admin/orders/pending'
       path: '/pending'
-      fullPath: '/orders/pending'
-      preLoaderRoute: typeof OrdersPendingRouteImport
-      parentRoute: typeof OrdersRoute
+      fullPath: '/panel-admin/orders/pending'
+      preLoaderRoute: typeof PanelAdminOrdersPendingRouteImport
+      parentRoute: typeof PanelAdminOrdersRoute
     }
-    '/users/$id': {
-      id: '/users/$id'
+    '/panel-admin/users/$id': {
+      id: '/panel-admin/users/$id'
       path: '/$id'
-      fullPath: '/users/$id'
-      preLoaderRoute: typeof UsersIdRouteImport
-      parentRoute: typeof UsersRoute
+      fullPath: '/panel-admin/users/$id'
+      preLoaderRoute: typeof PanelAdminUsersIdRouteImport
+      parentRoute: typeof PanelAdminUsersRoute
     }
   }
 }
 
-interface OrdersRouteChildren {
-  OrdersCompletedRoute: typeof OrdersCompletedRoute
-  OrdersPendingRoute: typeof OrdersPendingRoute
+interface PanelAdminOrdersRouteChildren {
+  PanelAdminOrdersCompletedRoute: typeof PanelAdminOrdersCompletedRoute
+  PanelAdminOrdersPendingRoute: typeof PanelAdminOrdersPendingRoute
 }
 
-const OrdersRouteChildren: OrdersRouteChildren = {
-  OrdersCompletedRoute: OrdersCompletedRoute,
-  OrdersPendingRoute: OrdersPendingRoute,
+const PanelAdminOrdersRouteChildren: PanelAdminOrdersRouteChildren = {
+  PanelAdminOrdersCompletedRoute: PanelAdminOrdersCompletedRoute,
+  PanelAdminOrdersPendingRoute: PanelAdminOrdersPendingRoute,
 }
 
-const OrdersRouteWithChildren =
-  OrdersRoute._addFileChildren(OrdersRouteChildren)
+const PanelAdminOrdersRouteWithChildren =
+  PanelAdminOrdersRoute._addFileChildren(PanelAdminOrdersRouteChildren)
 
-interface UsersRouteChildren {
-  UsersIdRoute: typeof UsersIdRoute
+interface PanelAdminUsersRouteChildren {
+  PanelAdminUsersIdRoute: typeof PanelAdminUsersIdRoute
 }
 
-const UsersRouteChildren: UsersRouteChildren = {
-  UsersIdRoute: UsersIdRoute,
+const PanelAdminUsersRouteChildren: PanelAdminUsersRouteChildren = {
+  PanelAdminUsersIdRoute: PanelAdminUsersIdRoute,
 }
 
-const UsersRouteWithChildren = UsersRoute._addFileChildren(UsersRouteChildren)
+const PanelAdminUsersRouteWithChildren = PanelAdminUsersRoute._addFileChildren(
+  PanelAdminUsersRouteChildren,
+)
+
+interface PanelAdminRouteChildren {
+  PanelAdminAnalyticsRoute: typeof PanelAdminAnalyticsRoute
+  PanelAdminOrdersRoute: typeof PanelAdminOrdersRouteWithChildren
+  PanelAdminSettingsRoute: typeof PanelAdminSettingsRoute
+  PanelAdminUsersRoute: typeof PanelAdminUsersRouteWithChildren
+  PanelAdminIndexRoute: typeof PanelAdminIndexRoute
+}
+
+const PanelAdminRouteChildren: PanelAdminRouteChildren = {
+  PanelAdminAnalyticsRoute: PanelAdminAnalyticsRoute,
+  PanelAdminOrdersRoute: PanelAdminOrdersRouteWithChildren,
+  PanelAdminSettingsRoute: PanelAdminSettingsRoute,
+  PanelAdminUsersRoute: PanelAdminUsersRouteWithChildren,
+  PanelAdminIndexRoute: PanelAdminIndexRoute,
+}
+
+const PanelAdminRouteWithChildren = PanelAdminRoute._addFileChildren(
+  PanelAdminRouteChildren,
+)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AnalyticsRoute: AnalyticsRoute,
-  OrdersRoute: OrdersRouteWithChildren,
-  SettingsRoute: SettingsRoute,
-  UsersRoute: UsersRouteWithChildren,
+  PanelAdminRoute: PanelAdminRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/solid-router';
 
-import PageHeader from '../components/layout/PageHeader';
-import Card from '../components/ui/Card';
+import PageHeader from '../../components/layout/PageHeader';
+import Card from '../../components/ui/Card';
 
 function Settings() {
   return (
@@ -16,7 +16,7 @@ function Settings() {
   );
 }
 
-export const Route = createFileRoute('/settings')({
+export const Route = createFileRoute('/panel-admin/settings')({
   head: () => ({ meta: [{ title: 'Settings - solid-admin' }] }),
   component: Settings,
 });

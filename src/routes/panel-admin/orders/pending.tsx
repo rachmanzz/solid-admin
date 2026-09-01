@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/solid-router';
 
-import PageHeader from '../../components/layout/PageHeader';
-import Card from '../../components/ui/Card';
+import PageHeader from '../../../components/layout/PageHeader';
+import Card from '../../../components/ui/Card';
 
 function PendingOrders() {
   return (
@@ -16,7 +16,7 @@ function PendingOrders() {
   );
 }
 
-export const Route = createFileRoute('/orders/pending')({
+export const Route = createFileRoute('/panel-admin/orders/pending')({
   head: () => ({ meta: [{ title: 'Pending Orders - solid-admin' }] }),
   component: PendingOrders,
 });

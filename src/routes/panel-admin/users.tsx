@@ -1,10 +1,10 @@
 import { Show } from 'solid-js';
 import { Link, createFileRoute } from '@tanstack/solid-router';
 
-import PageHeader from '../components/layout/PageHeader';
-import Card from '../components/ui/Card';
-import DataTable from '../components/ui/DataTable';
-import EmptyState from '../components/ui/EmptyState';
+import PageHeader from '../../components/layout/PageHeader';
+import Card from '../../components/ui/Card';
+import DataTable from '../../components/ui/DataTable';
+import EmptyState from '../../components/ui/EmptyState';
 
 type User = {
   id: string;
@@ -43,7 +43,7 @@ const userColumns = [
     key: 'actions',
     header: '',
     cell: (u: User) => (
-      <Link to="/users/$id" params={{ id: u.id }} class="btn btn-sm btn-ghost">
+      <Link to="/panel-admin/users/$id" params={{ id: u.id }} class="btn btn-sm btn-ghost">
         View
       </Link>
     ),
@@ -68,7 +68,7 @@ function UsersPage() {
   );
 }
 
-export const Route = createFileRoute('/users')({
+export const Route = createFileRoute('/panel-admin/users')({
   head: () => ({ meta: [{ title: 'Users - solid-admin' }] }),
   component: UsersPage,
 });
