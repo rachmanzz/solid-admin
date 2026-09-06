@@ -34,7 +34,7 @@ function UserPage() {
 
 export const Route = createFileRoute('/panel-admin/users/$id')({
   head: ({ params }) => ({
-    meta: [{ title: `User ${params.id} - Solid App` }],
+    meta: [{ title: `User ${params.id} - solid-admin` }],
   }),
   component: UserPage,
 });

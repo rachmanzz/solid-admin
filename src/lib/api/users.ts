@@ -1,30 +1,32 @@
-import { request } from './client';
+import { fetchUserManifest } from './manifest';
 import type { User } from './types';
 
-// One function per endpoint. Each returns typed data or throws; none of these
-// cache, retry, or render UI. That is the job of hooks/Query.
-export function fetchUsers(): Promise<User[]> {
-  return request<User[]>('/users');
+// One function per endpoint, backed by the static demo manifest. Each returns
+// typed data or throws; none of these cache, retry, or render UI. That is the
+// job of hooks/Query. Swap these bodies for request() calls when a real /api
+// backend exists.
+export async function fetchUsers(): Promise<User[]> {
+  const manifest = await fetchUserManifest();
+  return Object.values(manifest);
 }
 
-export function fetchUser(id: string): Promise<User> {
-  return request<User>(`/users/${id}`);
+export async function fetchUser(id: string): Promise<User> {
+  const manifest = await fetchUserManifest();
+  const user = manifest[id];
+  if (!user) {
+    throw new Error(`User not found (${id})`);
+  }
+  return user;
 }
 
-export function createUser(input: Pick<User, 'name' | 'title' | 'role'>): Promise<User> {
-  return request<User>('/users', {
-    method: 'POST',
-    body: JSON.stringify(input),
-  });
+export function createUser(_input: Pick<User, 'name' | 'title' | 'role'>): Promise<User> {
+  throw new Error('createUser is not implemented against the static manifest');
 }
 
-export function updateUser(id: string, input: Partial<User>): Promise<User> {
-  return request<User>(`/users/${id}`, {
-    method: 'PATCH',
-    body: JSON.stringify(input),
-  });
+export function updateUser(_id: string, _input: Partial<User>): Promise<User> {
+  throw new Error('updateUser is not implemented against the static manifest');
 }
 
-export function deleteUser(id: string): Promise<void> {
-  return request<void>(`/users/${id}`, { method: 'DELETE' });
+export function deleteUser(_id: string): Promise<void> {
+  throw new Error('deleteUser is not implemented against the static manifest');
 }

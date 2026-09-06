@@ -3,7 +3,7 @@
   "configVersion": 1,
   "workspaces": {
     "": {
-      "name": "example-with-tanstack-router",
+      "name": "solid-admin",
       "dependencies": {
         "@solidjs/web": "^2.0.0-rc.4",
         "@tailwindcss/vite": "^4.3.3",

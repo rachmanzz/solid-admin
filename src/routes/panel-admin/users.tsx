@@ -5,20 +5,8 @@ import PageHeader from '../../components/layout/PageHeader';
 import Card from '../../components/ui/Card';
 import DataTable from '../../components/ui/DataTable';
 import EmptyState from '../../components/ui/EmptyState';
-
-type User = {
-  id: string;
-  name: string;
-  title: string;
-  role: 'admin' | 'editor' | 'viewer';
-};
-
-const users: User[] = [
-  { id: '1', name: 'Ava Thompson', title: 'Administrator', role: 'admin' },
-  { id: '2', name: 'Liam Chen', title: 'Editor', role: 'editor' },
-  { id: '3', name: 'Noah Patel', title: 'Viewer', role: 'viewer' },
-  { id: '4', name: 'Mia Garcia', title: 'Editor', role: 'editor' },
-];
+import { useUsers } from '../../hooks/useUsers';
+import type { User } from '../../lib/api/types';
 
 const userColumns = [
   { key: 'name', header: 'Name', cell: (u: User) => <span class="font-medium">{u.name}</span> },
@@ -51,6 +39,8 @@ const userColumns = [
 ];
 
 function UsersPage() {
+  const query = useUsers();
+
   return (
     <section class="space-y-6">
       <PageHeader
@@ -60,8 +50,12 @@ function UsersPage() {
       />
 
       <Card>
-        <Show when={users.length > 0} fallback={<EmptyState message="No users found." />}>
-          <DataTable columns={userColumns} rows={users} rowKey={(u) => u.id} />
+        <Show when={query.data} fallback={<span class="loading loading-spinner loading-lg" />}>
+          {(users) => (
+            <Show when={users().length > 0} fallback={<EmptyState message="No users found." />}>
+              <DataTable columns={userColumns} rows={users()} />
+            </Show>
+          )}
         </Show>
       </Card>
     </section>

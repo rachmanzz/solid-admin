@@ -99,6 +99,35 @@ consult it and keep it coherent:
   propose a `decision-log.md` entry (subject to user approval per the rules
   above) rather than leaving rationale implicit.
 
+### Two changelogs — do not confuse them
+
+This repository has **two** changelogs with different audiences, scopes, and
+rules. They are not interchangeable:
+
+- **`CHANGELOG.md` (repository root) — the public changelog.** This is the
+  user-facing release history for people who use or extend the template. It
+  follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and
+  [Semantic Versioning](https://semver.org/spec/v2.0.0.html). Write entries here
+  in release-oriented language, grouped under `Added` / `Changed` / `Removed` /
+  `Fixed`, describing **what a user or template consumer sees**. Keep it
+  concise and free of internal implementation noise (no agent-playbook details,
+  no skill-file corrections, no "recorded a decision" notes). Update it when the
+  behavior, API surface, or public documentation of the template changes.
+
+- **`knowledge/changelog.md` — the internal, append-only development log.** This
+  is part of the project's `knowledge/` base and is written **for agents and
+  maintainers**, not for the public. It records the *working history* of the
+  codebase in detail: implementation changes, internal refactors, skill/doc
+  syncs, transient issues, and the rationale behind them. It is **append-only**
+  (see its "How to write logs" guide) — new entries go at the top and existing
+  entries are never edited or deleted.
+
+**Rule:** when a change is both user-visible *and* worth recording internally,
+add an entry to **both** files, each in its own voice — the public one in
+release language, the internal one in engineering detail. When the change is
+purely internal (skill/doc sync, test-only, transient HMR notes, etc.), record
+it **only** in `knowledge/changelog.md`.
+
 ## Project skills (in `.opencode/skills/` — read on demand)
 
 The project ships agent skills that encode engineering conventions for this codebase:
