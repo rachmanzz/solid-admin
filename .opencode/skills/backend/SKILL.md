@@ -170,7 +170,7 @@ logic lives here.
 const users = useUsers();
 return (
   <Show when={users.data} fallback={<LoadingSkeleton />}>
-    <DataTable columns={usersColumns} rows={users.data!} rowKey={(u) => u.id} />
+    <DataTable columns={usersColumns} rows={users.data!} />
   </Show>
 );
 ```
@@ -185,9 +185,8 @@ testable.
 
 All API DTOs live in `lib/api/types.ts`. Define response shapes and shared
 business types here; import them into hooks and routes. Do not scatter interface
-definitions across feature folders. `lib/constants.ts` holds `API_BASE_URL` and
-key prefixes. `lib/utils.ts` holds pure formatting/transform helpers — keep
-formatting out of components and out of the fetch layer.
+definitions across feature folders. `lib/constants.ts` holds `API_BASE_URL`;
+query key prefixes live in `lib/queries/keys.ts`.
 
 ## Error handling & states
 

@@ -41,8 +41,8 @@ require desktop width (e.g. deep data-grid editing).
     to prevent focus and screen-reader access.
   - `Navbar.tsx` hides its drawer-toggle behind `lg:hidden` (only shown on small
     screens).
-- **Stat groups:** `index.tsx` uses `sm:stats-horizontal` so stat cards sit
-  vertically on mobile and go side-by-side from `sm` up.
+- **Stat groups:** `index.tsx` uses `grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4`
+  so stat cards stack on mobile and fan out from `sm` up.
 - **Page padding/content:** use responsive utilities so content breathes on
   mobile (`px-4 lg:px-8`, `grid-cols-1 md:grid-cols-2 lg:grid-cols-4`).
 
@@ -60,8 +60,9 @@ require desktop width (e.g. deep data-grid editing).
    meet this; keep custom controls similarly sized).
 5. **No horizontal squeeze:** avoid fixed widths; use fluid layouts
    (`w-full`, `max-w-*`, `grid`/`flex` with wrapping).
-6. **Preserve existing breakpoints:** do not regress the current `lg:drawer-open` /
-   `lg:hidden` / `sm:stats-horizontal` behavior when touching layout.
+6. **Preserve existing breakpoints:** do not regress the current `lg:hidden` /
+   `lg:block` drawer toggle and the `grid-cols-1 sm:grid-cols-2 lg:grid-cols-4`
+   stat-group behavior when touching layout.
 
 ## When NOT to force responsive
 

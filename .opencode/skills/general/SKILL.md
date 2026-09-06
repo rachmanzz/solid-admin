@@ -127,7 +127,7 @@ Test behavior, not implementation. A test that breaks when you refactor a functi
 
 **What not to test:** internal state transitions, CSS class names, DOM structure, third-party library internals. These are implementation details that change frequently and tell you nothing about whether the feature works.
 
-**Tooling:** `@solidjs/testing-library` renders components in a real DOM; `captureArtifact()` from `@solidjs/diagnostics` captures reactive diagnostics; Vitest runs the suite. Co-locate tests next to the source (`Counter.test.tsx` next to `Counter.tsx`).
+**Tooling:** `@solidjs/testing-library` renders components in a real DOM; `captureArtifact()` from `@solidjs/diagnostics` captures reactive diagnostics; Vitest runs the suite. Co-locate tests next to the source (`DataTable.test.tsx` next to `DataTable.tsx`).
 
 ---
 
