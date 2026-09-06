@@ -79,6 +79,64 @@ and add a short body when the *why* is not obvious from the diff.
 - Keep the diff as small as possible and focused on one change.
 - Make sure lint, tests, and build pass in CI.
 
+## Contributing with AI or AI agents
+
+Contributions made with the help of AI assistants or autonomous AI agents are
+welcome, but they are treated exactly like any other contribution and must
+follow the same rules. An AI's output is a starting point, not a substitute for
+your own judgment or the review process.
+
+### If you drive an AI assistant
+
+You prompt the AI and review what it produces. This is the recommended way to
+use AI in this project.
+
+1. **Point it at the rules.** Have the AI read [`AGENTS.md`](AGENTS.md) first.
+   It contains mandatory conventions (daisyUI-first styling, the
+   `lib/api → hooks → routes` data layering, static-only build, and English-only
+   content) that the AI must follow.
+2. **Scope the task.** Give the AI a single, well-defined change. Do not ask for
+   broad rewrites or unrequested "improvements".
+3. **Require a plan for non-trivial work.** For anything larger than a small
+   fix, ask the AI to present a plan and wait for your approval before it edits
+   files.
+
+### If you run an autonomous AI agent
+
+An autonomous agent acts on your behalf with little or no per-step prompting.
+Treat its work with the same care as your own:
+
+- **Start from a written brief.** Define the goal, scope, and any explicit
+  boundaries before the agent runs. Vague instructions produce large, hard-to-review
+  diffs.
+- **Keep permissions tight.** Do not grant the agent write, commit, or push
+  access beyond what the task needs. For sensitive or destructive operations
+  (deleting files, force-pushing, rewriting history), require explicit approval
+  instead of letting the agent decide.
+- **Inspect before you accept.** Read the agent's full diff and reasoning before
+  committing. If you cannot explain a change, do not merge it.
+- **Watch for scope creep.** Reject unrelated edits, "helpful" refactors, and
+  changes to files outside the task. Ask the agent to revert anything that was
+  not requested.
+
+### Submitting AI-assisted work
+
+- **Review every change yourself.** You are responsible for the code you submit.
+  Never merge AI output you have not read and verified.
+- **Keep the diff focused.** Strip out unrelated edits, regenerated noise, and
+  scratch files. Stage only the files relevant to the task.
+- **Run the checks.** Confirm `bun lint`, `bun test`, and `bun build` pass
+  before opening a pull request, and fix anything the AI introduced.
+- **Update the changelogs correctly.** Use [`CHANGELOG.md`](CHANGELOG.md) for
+  user-visible changes and [`knowledge/changelog.md`](knowledge/changelog.md)
+  for internal, engineering-level detail — see [`AGENTS.md`](AGENTS.md) for the
+  distinction.
+- **Follow the commit rules.** Use clear, imperative messages and keep the
+  co-author trailer if the AI produced the change (see [Commit
+  messages](#commit-messages)).
+
+Do not use AI output to bypass review, tests, or the Code of Conduct.
+
 ## Questions
 
 If you are unsure about anything, open an issue or start a discussion rather
