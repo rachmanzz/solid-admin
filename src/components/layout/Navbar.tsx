@@ -86,7 +86,7 @@ export default function Navbar() {
               </div>
             </div>
           </div>
-          <ul tabindex="0" class="dropdown-content menu bg-base-100 border border-(--border) rounded-xl mt-3 w-48 p-2 shadow-lg">
+          <ul tabindex="0" class="dropdown-content menu bg-base-100 border border-base-300 rounded-xl mt-3 w-48 p-2 shadow-lg">
             <li><a class="rounded-lg">Profile</a></li>
             <li><a class="rounded-lg">Settings</a></li>
             <li><a class="rounded-lg text-error">Sign out</a></li>

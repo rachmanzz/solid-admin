@@ -17,7 +17,7 @@ describe('<DataTable />', () => {
       { id: 2, name: 'Liam' },
     ];
     const { getByText } = render(() => (
-      <DataTable columns={columns} rows={rows} rowKey={(r) => r.id} />
+      <DataTable columns={columns} rows={rows} />
     ));
     expect(getByText('#')).toBeInTheDocument();
     expect(getByText('Name')).toBeInTheDocument();
@@ -27,7 +27,7 @@ describe('<DataTable />', () => {
 
   test('renders no rows when the list is empty', () => {
     const { queryByText } = render(() => (
-      <DataTable columns={columns} rows={[]} rowKey={(r) => r.id} />
+      <DataTable columns={columns} rows={[]} />
     ));
     expect(queryByText('Name')).toBeInTheDocument();
   });

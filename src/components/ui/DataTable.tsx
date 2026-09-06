@@ -6,7 +6,6 @@ import type { JSX } from '@solidjs/web';
 export default function DataTable<T extends object>(props: {
   columns: { key: string; header: string; cell: (row: T) => JSX.Element }[];
   rows: T[];
-  rowKey: (row: T) => string | number;
 }) {
   return (
     <div class="overflow-x-auto">
