@@ -2,7 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/solid-query';
 
 import { createUser, deleteUser, fetchUser, fetchUsers, updateUser } from '../lib/api/users';
 import { queryKeys } from '../lib/queries/keys';
-import type { User } from '../lib/api/types';
+import type { User, UserUpdate } from '../lib/api/types';
 
 export function useUsers() {
   return useQuery(() => ({
@@ -29,9 +29,8 @@ export function useCreateUser() {
 export function useUpdateUser() {
   const queryClient = useQueryClient();
   return useMutation(() => ({
-    mutationFn: ({ id, input }: { id: string; input: Partial<User> }) =>
-      updateUser(id, input),
-    onSuccess: (updated) =>
+    mutationFn: ({ id, input }: { id: string; input: UserUpdate }) => updateUser(id, input),
+    onSuccess: (updated: User) =>
       queryClient.invalidateQueries({ queryKey: queryKeys.users.byId(updated.id) }),
   }));
 }

@@ -22,6 +22,27 @@ Recorded decisions for **solid-admin**, with their context and rationale. Each
 entry follows the ADR-style format: **Decision**, **Context**, **Consequence**.
 Newest decision is at the top.
 
+## D-015: Data layer wired to the live REST API (supersedes static manifest)
+
+- **Decision:** Point the data layer at the live REST API
+  `https://api-testing.rahman-tech.my.id` (Hono + Cloudflare Workers + D1) and
+  remove the static `public/users.json` demo manifest, rather than keeping the
+  template on in-memory/static data.
+- **Context:** The Users list and detail pages had drifted across two data
+  sources (a hardcoded list vs. `public/users.json`). A real API became
+  available with an OpenAPI spec covering `users`, `products`, `transactions`,
+  and `auth`. Its responses use an envelope (`{ success, data }` on success,
+  `{ success, error }` on failure) that differs from the raw arrays documented
+  in the OpenAPI file, and CORS was enabled with `Access-Control-Allow-Origin: *`.
+- **Consequence:** `constants.ts` defaults `API_BASE_URL` to the testing API
+  (overridable via `VITE_API_BASE_URL`). `client.ts` unwraps the envelope and
+  normalizes errors (string or ZodError). `types.ts` now mirrors the API DTOs.
+  New `products.ts`/`transactions.ts` modules and hooks, `users.ts`/`auth.ts`
+  rewritten, and a `token.ts` module stores the JWT for the `Authorization`
+  header. `profiles`/`useUserProfile` and the manifest are deleted. This
+  supersedes the earlier static-manifest choice recorded when the data layer was
+  first unified.
+
 ## D-014: Dashboard chart — Chart.js mounted directly, not a Solid wrapper
 
 - **Decision:** Use Chart.js directly (framework-agnostic, browser-only) mounted

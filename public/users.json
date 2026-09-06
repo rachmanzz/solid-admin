@@ -1,5 +1,0 @@
-{
-  "1": { "id": "1", "name": "Ada Lovelace", "title": "First programmer", "role": "admin" },
-  "2": { "id": "2", "name": "Grace Hopper", "title": "Compiler pioneer", "role": "editor" },
-  "3": { "id": "3", "name": "Margaret Hamilton", "title": "Software engineering", "role": "viewer" }
-}

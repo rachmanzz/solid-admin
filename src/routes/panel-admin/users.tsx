@@ -10,19 +10,12 @@ import type { User } from '../../lib/api/types';
 
 const userColumns = [
   { key: 'name', header: 'Name', cell: (u: User) => <span class="font-medium">{u.name}</span> },
-  { key: 'title', header: 'Title', cell: (u: User) => u.title },
+  { key: 'email', header: 'Email', cell: (u: User) => u.email },
   {
     key: 'role',
     header: 'Role',
     cell: (u: User) => (
-      <span
-        class={{
-          badge: true,
-          'badge-primary': u.role === 'admin',
-          'badge-secondary': u.role === 'editor',
-          'badge-ghost': u.role === 'viewer',
-        }}
-      >
+      <span class={{ badge: true, 'badge-primary': u.role === 'admin', 'badge-ghost': u.role === 'user' }}>
         {u.role}
       </span>
     ),
@@ -50,12 +43,13 @@ function UsersPage() {
       />
 
       <Card>
-        <Show when={query.data} fallback={<span class="loading loading-spinner loading-lg" />}>
-          {(users) => (
-            <Show when={users().length > 0} fallback={<EmptyState message="No users found." />}>
-              <DataTable columns={userColumns} rows={users()} />
-            </Show>
-          )}
+        <Show
+          when={!query.isLoading && !query.isError}
+          fallback={<span class="loading loading-spinner loading-lg" />}
+        >
+          <Show when={query.data && query.data!.length > 0} fallback={<EmptyState message="No users found." />}>
+            <DataTable columns={userColumns} rows={query.data!} />
+          </Show>
         </Show>
       </Card>
     </section>

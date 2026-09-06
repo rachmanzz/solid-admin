@@ -24,6 +24,46 @@ chronological order (newest at the top).
 ## [Unreleased]
 
 ### Added
+- Wired the data layer to the live REST API at
+  `https://api-testing.rahman-tech.my.id` (Hono + Cloudflare Workers + D1). New
+  `src/lib/api/products.ts` and `src/lib/api/transactions.ts` modules plus
+  `useProducts`/`useTransactions` hooks; `users.ts` and `auth.ts` rewritten
+  against `/api/v1/users` and `/auth/*`.
+- `src/lib/api/token.ts` — JWT token storage (`localStorage`) read by
+  `client.ts` to attach a `Bearer` Authorization header.
+- `client.ts` now unwraps the API envelope `{ success, data }` on success and
+  normalizes `{ success, error }` failures (error may be a string or a ZodError
+  object).
+- `.env.example` documenting the `VITE_API_BASE_URL` override; `constants.ts`
+  now defaults to the testing API instead of `/api`.
+
+### Changed
+- `types.ts` rewritten to the OpenAPI schemas: `User` (`id`/`email`/`name`/
+  `role` `"user"|"admin"`/`created_at`), plus `Product`, `Transaction`, auth DTOs.
+- `users.tsx` list page and `users.$id.tsx` detail page now consume the API via
+  `useUsers`/`useUser`; detail page shows `email` and `role` instead of `title`.
+- `useAuth.ts` now exposes `useLogin`, `useRegister`, and `useLogout` against
+  `/auth/*` (data layer only; no login UI).
+
+### Removed
+- Static demo manifest path: `src/lib/api/manifest.ts`, `src/lib/api/profiles.ts`,
+  `src/lib/api/profiles.test.ts`, `src/hooks/useUserProfile.ts`, and
+  `public/users.json`. Supersedes the earlier static-manifest decision (see
+  decision log D-015).
+- Deleted leftover template artifacts with no importers: `src/components/Counter.tsx`,
+  `src/components/Counter.test.tsx`, and `src/lib/utils.ts` (`formatNumber`/`formatDate`).
+- Removed the unused `rowKey` prop from `DataTable` and its call sites/tests.
+
+### Changed
+- `Navbar.tsx` dropdown uses the daisyUI `border-base-300` class instead of a raw
+  `border-(--border)` token.
+- Corrected `responsive/SKILL.md` to document the stat-group layout as
+  `grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4` (was `sm:stats-horizontal`).
+- Updated `docs/project-structures.md`, `docs/pages/project-structures.md`,
+  `general/SKILL.md`, and `backend/SKILL.md` to reflect the current component
+  layout (`layout/` + `ui/`) and remove stale `Counter`/`lib/utils` references.
+
+### Added
 - `LineChart` component (`src/components/ui/LineChart.tsx`) rendering a line
   chart in the dashboard Overview card via Chart.js mounted directly on a
   `<canvas>` ref (Solid 2 `onSettled`/`onCleanup`).
